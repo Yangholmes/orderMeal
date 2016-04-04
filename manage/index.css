@@ -1,0 +1,52 @@
+html,
+body{
+	width: 100%;
+	height: 100%;
+	font-family: "Microsoft YaHei", Î¢ÈíÑÅºÚ, sans-serif;
+	font-size: 100%;
+}
+p,h1,h2,h3,h4,h5,h6,input,output{
+	padding: 0; margin: 0;
+	font-family: "Microsoft YaHei", Î¢ÈíÑÅºÚ, sans-serif;
+}
+
+main{
+	margin: 1em .5em;
+	width: 100%;
+}
+
+.gallery{
+	font-size: 1.5em;
+	width: 100%;
+}
+.gallery *{
+	margin: 1em 0;
+}
+.gallery img{
+	width:100%;
+}
+.gallery input,
+.gallery textarea{
+	width: 100%;
+}
+.gallery textarea{
+	height: 4em;
+}
+.gallery input[type="submit"]{
+	height: 3em;
+	border: none;
+	border-radius: .5em;
+	background-color: rgb(0, 200, 50);
+}
+.gallery input[type="submit"]:hover{
+	background-color: rgb(0, 210, 55);
+}
+.gallery input[type="submit"]:active{
+	background-color: rgb(0, 180, 40);
+}
+.gallery::after{
+	content: '';
+	display: block;
+	border-bottom: solid 1px rgb(150,150,150);
+	margin: 1em 0;
+}

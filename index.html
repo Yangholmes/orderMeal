@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="index.css" />
+		<title>点餐</title>
+	</head>
+
+	<body>
+		<header></header>
+		<main>
+			<div class="gallery">
+				<img src="manage/img.png" alt="菜单" />
+				<p>备注：</p>
+				<output id="remarks" name="remarks">备注</output>
+			</div>
+			<div class="selector">
+				<form action="orderMeal.php" method="post">
+					<select class="name" id="name" name="name"></select>
+					<!-- <input type="text" name="name" placeholder="请输入姓名"/> -->
+					<select class="meal" name="meal">
+						<option value="A">A</option>
+						<option value="B">B</option>
+						<option value="C">C</option>
+						<option value="D">D</option>
+					</select>
+					<input type="submit" value="确定此餐" />
+				</form>
+			</div>
+		</main>
+
+		<script type="text/javascript" src="index.js"></script>
+	</body>
+
+</html>
