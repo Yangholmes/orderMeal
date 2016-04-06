@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 	<head>
+		<meta name="renderer" content="webkit">
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="index.css" />
@@ -11,17 +12,38 @@
 		<header></header>
 		<main>
 			<div class="gallery">
-				<form action="submitMenu.php" method="post">
-					<a>
-						<input type="file" name="menu" accept="image/png,image/jpg" />
-					</a>
-					<textarea  placeholder="备注" name="remarks"></textarea>
-					<input type="submit" value="开始接受订餐" />
+				<form id="menu-form" enctype="multipart/form-data" action="submitMenu.php" method="post">
+					<div class="mask"></div>
+					<img id="menu-preview" src="img.png" />
+					<input type="file" id="choose-file" name="menu" accept="image/png,image/jpg" />
+					<textarea placeholder="备注" name="remarks"></textarea>
+					<input type="submit" id="submit-menu" value="开始接受订餐" />
 				</form>
 			</div>
 			
 			<div class="order">
-				
+				<input type="button" id="count-button" value="统计今日订单" />
+				<table id="count" class="count-table">
+					<tr>
+						<th>总计</th>
+						<th>A</th>
+						<th>B</th>
+						<th>C</th>
+						<th>D</th>
+					</tr>
+					<tr id="count-td">
+						<!-- <td></td> -->
+					</tr>
+				</table>
+				<table id="details" class="count">
+					<tr>
+						<th>姓名</th></th>
+						<th>餐</th>
+					</tr>
+					<tbody id="details-tb">
+						<!-- <td></td> -->
+					</tbody>
+				</table>
 			</div>
 		</main>
 

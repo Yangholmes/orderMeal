@@ -1,22 +1,22 @@
 <?php
 
 /**
-	 * Ç°¶ËÊı¾İ
-	 * Ò»¸öÏûÏ¢Àà
+	 * å‰ç«¯æ•°æ®
+	 * ä¸€ä¸ªæ¶ˆæ¯ç±»
 	 */
-	$type    = $_POST['queryType'];			//²Ù×÷Âë
-	$content = $_POST['content'];			//ÄÚÈİ
-	$status  = $_POST['status'];			//×´Ì¬
+	$type    = $_POST['queryType'];			//æ“ä½œç 
+	$content = $_POST['content'];			//å†…å®¹
+	$status  = $_POST['status'];			//çŠ¶æ€
 	
 	/**
-	 * ÅĞ¶Ï²Ù×÷ÏµÍ³
+	 * åˆ¤æ–­æ“ä½œç³»ç»Ÿ
 	 * WINNT, Linux
 	 */
 	$OS = PHP_OS;
 	
 	/**
-	 * ·µ»ØÇ°¶ËÊı¾İ¸ñÊ½
-	 * type: ¹ØÁªÊı×é
+	 * è¿”å›å‰ç«¯æ•°æ®æ ¼å¼
+	 * type: å…³è”æ•°ç»„
 	 */
 	$response = array(
 		'queryType'=>0, 
@@ -34,19 +34,19 @@ $database = "orderMeal";
 
 @ $orderMeal = new mysqli($host, $username, $psw, $database);
 if ($orderMeal->connect_errno) {
-	echo "Êı¾İ¿âÁ¬½ÓÊ§°ÜÁË£¬Ê§°Ü´úºÅÎª£º"."(".$orderMeal->connect_errno .")</br> ".$orderMeal->connect_error ."<br/>";
+	echo "æ•°æ®åº“è¿æ¥å¤±è´¥äº†ï¼Œå¤±è´¥ä»£å·ä¸ºï¼š"."(".$orderMeal->connect_errno .")</br> ".$orderMeal->connect_error ."<br/>";
 	exit("Uable to access to database.");
 }
 
 /**
- * ²éÑ¯ÈËÔ±ÁĞ±í
+ * æŸ¥è¯¢äººå‘˜åˆ—è¡¨
  */
 $table = "personnel";//
 $query = "select name from $table ";
 $personnel = $orderMeal->query($query);
 
 if( !$personnel ){
-	exit("¼ÓÔØÊ§°Ü£¡<br/>Ô­ÒòÊÇ£º<br/>".$orderMeal->error);
+	exit("åŠ è½½å¤±è´¥ï¼<br/>åŸå› æ˜¯ï¼š<br/>".$orderMeal->error);
 }
 
 $num_personnel = $personnel->num_rows;
@@ -59,14 +59,14 @@ for($i=0;$i<$num_personnel;$i++){
 $response['content']=array('personnel'=>$array_personnel);
 
 /**
- * ²éÑ¯ÊÇ·ñ¿ªÊ¼¶©²Í
+ * æŸ¥è¯¢æ˜¯å¦å¼€å§‹è®¢é¤
  */
 $table = "order".date('ymd');
 $query = "show tables like '$table'";
 $result = $orderMeal->query($query);
 
 if( !$result ){
-	exit("¼ÓÔØÊ§°Ü£¡<br/>Ô­ÒòÊÇ£º<br/>".$orderMeal->error);
+	exit("åŠ è½½å¤±è´¥ï¼<br/>åŸå› æ˜¯ï¼š<br/>".$orderMeal->error);
 }
 
 //if $orderEnale!=0, enable to order
@@ -75,15 +75,16 @@ $response['status'] = ($orderEnale!=0?1:0);
 $response['content']['orderEnable'] = $orderEnale;
 
 /**
- * ¹Ø±ÕÊı¾İ¿âÁ¬½Ó
+ * å…³é—­æ•°æ®åº“è¿æ¥
  */
 $orderMeal->close();
 
 /**
- * ¶ÁÈ¡±¸×¢
+ * è¯»å–å¤‡æ³¨
  */
 @ $file = fopen("manage/remark.txt", "r");
 $remark = fgets($file);
 $response['content']['remark'] = $remark;
+fclose($file);
 
 echo json_encode($response);

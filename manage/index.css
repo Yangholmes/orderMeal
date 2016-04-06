@@ -1,18 +1,22 @@
-html,
-body{
+@CHARSET "UTF-8";
+
+html{
 	width: 100%;
-	height: 100%;
-	font-family: "Microsoft YaHei", Î¢ÈíÑÅºÚ, sans-serif;
+}
+body{
+	width: 95%; height: 100%;
+	margin: 0 auto;
+	font-family: "Microsoft YaHei", å¾®è½¯é›…é»‘, sans-serif;
 	font-size: 100%;
 }
 p,h1,h2,h3,h4,h5,h6,input,output{
 	padding: 0; margin: 0;
-	font-family: "Microsoft YaHei", Î¢ÈíÑÅºÚ, sans-serif;
+	font-family: "Microsoft YaHei", å¾®è½¯é›…é»‘, sans-serif;
 }
 
 main{
 	margin: 1em .5em;
-	width: 100%;
+	/* width: 100%; */
 }
 
 .gallery{
@@ -22,7 +26,12 @@ main{
 .gallery *{
 	margin: 1em 0;
 }
-.gallery img{
+.gallery .mask {
+    background-color: rgba(0,0,0,.5);
+    position: absolute;
+}
+.gallery img,
+.gallery form{
 	width:100%;
 }
 .gallery input,
@@ -31,6 +40,11 @@ main{
 }
 .gallery textarea{
 	height: 4em;
+}
+.gallery input[type="file"]{
+	position: absolute;
+	width: 0;
+	visibility: hidden;
 }
 .gallery input[type="submit"]{
 	height: 3em;
@@ -49,4 +63,41 @@ main{
 	display: block;
 	border-bottom: solid 1px rgb(150,150,150);
 	margin: 1em 0;
+}
+
+.order{
+	width: 100%;
+}
+.order *{
+	margin: 1em 0;
+}
+.order input[type="button"]{
+	width: 100%;
+	height: 3em;
+	border: none;
+	border-radius: .5em;
+	background-color: rgb(0, 200, 50);
+}
+.order input[type="button"]:hover{
+	background-color: rgb(0, 210, 55);
+}
+.order input[type="button"]:active{
+	background-color: rgb(0, 180, 40);
+}
+.order table{
+	width: 100%;
+	border-collapse: collapse;
+	vertical-align: center;
+	text-align: center;
+}
+.order table, th, td
+{
+	border: 1px solid black;
+}
+
+@media only screen and (min-width: 960px){
+	main{
+		max-width: 800px;
+		margin: 0 auto;
+	}
 }

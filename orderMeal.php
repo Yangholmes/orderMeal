@@ -25,8 +25,27 @@ if ($orderMeal->connect_errno) {
 	exit("Uable to access to database.");
 }
 
-$table = "order".date('ymd');//
-$query = "insert into $table values ('', '$name', '$meal')";
+/**
+ * 点餐
+ */
+//防止重复，判断是否点过餐
+$table = "order".date('ymd');//生成今日订单表
+
+$query = "select $table.orderId 
+		 from personnel, $table 
+		 where 
+		 $table.personnelId = personnel.personnelId 
+		 and 
+		 personnel.name = '$name';";
+$result = $orderMeal->query($query);
+$repeat = $result->num_rows;
+
+//如果$repeat==0，说明还未点过餐，则新增一条记录；
+//如果$repeat!=0，说明还已点过餐，则修改一条记录。
+$query = ($repeat != 0)? 
+		 "update personnel, $table set $table.meal = '$meal' where $table.personnelId = personnel.personnelId and personnel.name = '$name'" 
+		 : 
+		 "insert into $table(meal, personnelId) values ('$meal', (select personnelId from personnel where personnel.name='$name'))";
 $result = $orderMeal->query($query);
 
 if( !$result ){
