@@ -10,7 +10,12 @@ $meal = trim( $_POST['meal'] );
  * check form data
  */
 
-
+/**
+ * 返回信息格式化
+ */
+$success = "<h1 style=\"font-size: 2em; margin: 2em 0;\">点餐成功，请于12:00就餐。<br/></h1>";
+$fail = "<h1 style=\"font-size: 2em; margin: 2em 0;\">点餐失败！<br/>中午没饭吃了！T.T<br/>";
+ 
 /**
  * database parameter
  */
@@ -49,7 +54,7 @@ $query = ($repeat != 0)?
 $result = $orderMeal->query($query);
 
 if( !$result ){
-	exit("点餐失败！<br/>原因是：<br/>".$orderMeal->error);
+	exit($fail."原因是：<br/>".$orderMeal->error);
 }
 
-echo "点餐成功，请于12:00就餐。";
+echo $success;

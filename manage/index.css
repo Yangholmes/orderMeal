@@ -26,6 +26,9 @@ main{
 .gallery *{
 	margin: 1em 0;
 }
+.gallery div#menu-preview-container{
+	margin: 0;
+}
 .gallery .mask {
 	background-color: rgba(0,0,0,.5);
 	position: absolute;

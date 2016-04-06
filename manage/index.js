@@ -66,10 +66,14 @@ function init(){
 	//注册图片上传按键事件
 	var chooseFile = document.getElementById('choose-file');
 	chooseFile.onchange = function(){showPreview(chooseFile)};
+	//注册鼠标进入、移出预览容器事件
+	var menuPreviewContainer = document.getElementById('menu-preview-container');
+	menuPreviewContainer.onmouseover = function(){onMouseOver(menuPreviewContainer)};
+	menuPreviewContainer.onmouseout = function(){onMouseOut(menuPreviewContainer)};
 	//注册图片预览控件点击事件
-	var menuPreview = document.getElementById('menu-preview');
-	menuPreview.onclick = function(){onFireFileinput(chooseFile)};
-	menuPreview.onmouseover = function(){onMouseOver(menuPreview)};
+	// var menuPreview = document.getElementById('menu-preview');
+	// menuPreview.onclick = function(){onFireFileinput(chooseFile)};
+	menuPreviewContainer.onclick = function(){onFireFileinput(chooseFile)};
 	//注册统计按键事件
 	var countButton = document.getElementById('count-button');
 	countButton.onclick = function(){onClick(countButton)};
@@ -84,14 +88,18 @@ function onFireFileinput(handle){
 	handle.click();
 }
 function onMouseOver(handle){
-	var imgHeight = handle.offsetHeight;
-	var imgWidth = handle.offsetWidth;
-	handle.previousSibling.previousSibling.style.height = imgHeight+'px';
-	handle.previousSibling.previousSibling.style.width = imgWidth+'px';
+	var mask = handle.getElementsByTagName('div')[0];
+	var img = handle.getElementsByTagName('img')[0];
+	var imgHeight = img.offsetHeight + 'px';
+	var imgWidth = img.offsetWidth + 'px';
+	mask.style.height = imgHeight;
+	mask.style.width = imgWidth;
+	mask,innerHTML = "~单击此处选择菜单上传~";
 }
 function onMouseOut(handle){
-	handle.previousSibling.previousSibling.style.height = '0';
-	handle.previousSibling.previousSibling.style.width = '0';
+	var mask = handle.getElementsByTagName('div')[0];
+	mask.style.height = 0;
+	mask.style.width = 0;
 }
 function showPreview(handle){
 	if( !handle ){

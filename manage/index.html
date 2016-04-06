@@ -13,8 +13,10 @@
 		<main>
 			<div class="gallery">
 				<form id="menu-form" enctype="multipart/form-data" action="submitMenu.php" method="post">
-					<div class="mask"></div>
-					<img id="menu-preview" src="img.png" />
+					<div id="menu-preview-container">
+						<div class="mask"></div>
+						<img id="menu-preview" src="img.png" />
+					</div>
 					<input type="file" id="choose-file" name="menu" accept="image/png,image/jpg" />
 					<textarea placeholder="备注" name="remarks"></textarea>
 					<input type="submit" id="submit-menu" value="开始接受订餐" />
