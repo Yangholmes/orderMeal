@@ -73,3 +73,5 @@ function creatOrder($db){
 		exit("加载失败！<br/>原因是：<br/>".$orderMeal->error);
 	}
 }
+
+echo "<h1 style=\"font-size: 2em; margin: 2em 0;\">启动成功，可以发通知订餐了~<br/></h1>";

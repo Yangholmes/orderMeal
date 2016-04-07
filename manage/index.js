@@ -67,13 +67,13 @@ function init(){
 	var chooseFile = document.getElementById('choose-file');
 	chooseFile.onchange = function(){showPreview(chooseFile)};
 	//注册鼠标进入、移出预览容器事件
-	var menuPreviewContainer = document.getElementById('menu-preview-container');
-	menuPreviewContainer.onmouseover = function(){onMouseOver(menuPreviewContainer)};
-	menuPreviewContainer.onmouseout = function(){onMouseOut(menuPreviewContainer)};
+	var menuPreviewTouch = document.getElementById('menu-preview-touch');
+	menuPreviewTouch.onmouseover = function(){onMouseOver(menuPreviewTouch)};
+	menuPreviewTouch.onmouseout = function(){onMouseOut(menuPreviewTouch)};
 	//注册图片预览控件点击事件
 	// var menuPreview = document.getElementById('menu-preview');
 	// menuPreview.onclick = function(){onFireFileinput(chooseFile)};
-	menuPreviewContainer.onclick = function(){onFireFileinput(chooseFile)};
+	menuPreviewTouch.onclick = function(){onFireFileinput(chooseFile)};
 	//注册统计按键事件
 	var countButton = document.getElementById('count-button');
 	countButton.onclick = function(){onClick(countButton)};
@@ -89,17 +89,22 @@ function onFireFileinput(handle){
 }
 function onMouseOver(handle){
 	var mask = handle.getElementsByTagName('div')[0];
+	var message = handle.getElementsByTagName('div')[1];
 	var img = handle.getElementsByTagName('img')[0];
-	var imgHeight = img.offsetHeight + 'px';
-	var imgWidth = img.offsetWidth + 'px';
-	mask.style.height = imgHeight;
-	mask.style.width = imgWidth;
-	mask,innerHTML = "~单击此处选择菜单上传~";
+	//获取菜单图片的大小
+	var imgHeight = img.offsetHeight;
+	var imgWidth = img.offsetWidth;
+	//设置mask的大小
+	mask.style.height = imgHeight + 'px';
+	mask.style.width = imgWidth + 'px';
+	//设置message的位置
+	var messageMarginTop = (imgHeight - message.offsetHeight)/2;
+	var messageMarginLeft = (imgWidth - message.offsetWidth)/2;
+	message.style.marginTop = messageMarginTop + 'px';
+	message.style.marginLeft = messageMarginLeft + 'px';
 }
 function onMouseOut(handle){
-	var mask = handle.getElementsByTagName('div')[0];
-	mask.style.height = 0;
-	mask.style.width = 0;
+	
 }
 function showPreview(handle){
 	if( !handle ){
@@ -110,6 +115,7 @@ function showPreview(handle){
 	var file = handle.files[0];
 	if( !/image\/png/.test(file.type) ){
 		alert("请选择png格式图片~");
+		handle;
 		return false;
 	}
 	if(window.FileReader && file) {
@@ -131,7 +137,6 @@ function onClick(handle){
 	});
 }
 function onSubmit(form){
-	console.log( form );
 	if( form.menu.value == null || form.menu.value == "" ){
 		alert("请上传菜单！");
 		return false;

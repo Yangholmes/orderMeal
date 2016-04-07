@@ -26,12 +26,18 @@ main{
 .gallery *{
 	margin: 1em 0;
 }
-.gallery div#menu-preview-container{
+.gallery div#menu-preview-touch{
 	margin: 0;
 }
-.gallery .mask {
-	background-color: rgba(0,0,0,.5);
+.gallery .mask{
+	background-color: rgba(0,0,0,0);
 	position: absolute;
+}
+.gallery .message{
+	color: rgba(220, 220, 220, 0);
+	position: absolute;
+	/* visibility: hidden; */
+	text-align: center;
 }
 .gallery img,
 .gallery form{
@@ -103,4 +109,20 @@ main{
 		max-width: 800px;
 		margin: 0 auto;
 	}
+}
+
+#menu-preview-touch{
+	cursor: pointer;
+}
+#menu-preview-touch .mask{
+	transition: background-color .5s;
+}
+#menu-preview-touch:hover .mask{
+	background-color: rgba(0,0,0,.5);
+}
+#menu-preview-touch .message{
+	transition: color .5s;
+}
+#menu-preview-touch:hover .message{
+	color: rgba(230, 230, 230, 1);
 }
