@@ -103,3 +103,6 @@ ALTER TABLE `personnel`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- business department personnel
+-- INSERT INTO personnel (name) VALUES ('周志敏'), ('梁燕婷'), ('曾庆瑾'), ('吴微微'), ('刘荣'), ('邹志豪'), ('冯海利'), ('秦洁珊'), ('汤芷莹'), ('潘学冰');
