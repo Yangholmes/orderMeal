@@ -63,7 +63,17 @@ function postData(url, data, callback) {
 }
 
 function init(){
+	eventRegister();
 	checkOrder();
+}
+function eventRegister(){
+	//注册提交订单按键事件
+	var orderForm = document.getElementById('order-form');
+	orderForm.onsubmit = function(){return onSubmit(orderForm)};
+}
+function onSubmit(handle){
+	localStorage.nameSelectedIndex = handle.name.selectedIndex;
+	//return false;
 }
 function loadMenu(remark){
 	var remarkCtrl = document.getElementById('remarks');
@@ -75,7 +85,7 @@ function checkOrder(){
 		var response = JSON.parse(request.responseText);
 		if( response.status == 0 ){
 			if(response.content.orderEnable == 0){
-				alert("饿了吗？\n\n点餐时间还未到哦~");
+				alert("饿了吗？\n\n点餐时间还未到哦~\n");
 			}
 			else{
 				alert("不知道什么原因点不了餐了~\n找管理员问问情况吧~");
@@ -94,6 +104,13 @@ function loadName(personnel){
 			"<option value=\""+personnel[i]+"\">"+personnel[i]+"</option>";
 	}
 	nameSelect.innerHTML = optionsHTML;
+	
+	loadLocalStorage(nameSelect);
+}
+function loadLocalStorage(handle){
+	if( localStorage.nameSelectedIndex == null )
+		return false;
+	handle.selectedIndex = localStorage.nameSelectedIndex;
 }
 
 init();

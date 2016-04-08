@@ -5,9 +5,12 @@ $img = $_FILES['menu'];
 
 /**
  * 上传菜单
+ * if $img is null, keep old menu.
  */
-$imgType = substr( $img['name'], strrpos($img['name'],'.') );
-copy($img['tmp_name'], 'img'.$imgType);//以指定名称保存到服务器
+if( $img['name'] ){
+	$imgType = substr( $img['name'], strrpos($img['name'],'.') );
+	copy($img['tmp_name'], 'img'.$imgType);//以指定名称保存到服务器
+}
 
 /**
  * 写入备注

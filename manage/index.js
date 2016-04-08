@@ -115,7 +115,10 @@ function showPreview(handle){
 	var file = handle.files[0];
 	if( !/image\/png/.test(file.type) ){
 		alert("请选择png格式图片~");
-		handle;
+		console.log( handle.files[0] );
+		// handle.outerHTML = handle.outerHTML.replace(/(value=\").+\"/i, "$1\"");
+		handle.value = null;
+		console.log( handle.files[0] );
 		return false;
 	}
 	if(window.FileReader && file) {
@@ -138,8 +141,8 @@ function onClick(handle){
 }
 function onSubmit(form){
 	if( form.menu.value == null || form.menu.value == "" ){
-		alert("请上传菜单！");
-		return false;
+		//alert("请上传菜单！");
+		//return false;
 	}
 	else
 		return true;

@@ -15,7 +15,7 @@ p,h1,h2,h3,h4,h5,h6,input,output{
 }
 
 main{
-	margin: 1em .5em;
+	margin: 3em .5em;
 	/* width: 100%; */
 }
 
@@ -107,7 +107,7 @@ main{
 @media only screen and (min-width: 960px){
 	main{
 		max-width: 800px;
-		margin: 0 auto;
+		margin: 3em auto;
 	}
 }
 
