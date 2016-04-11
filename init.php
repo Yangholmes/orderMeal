@@ -23,7 +23,20 @@
 		'content'=>'', 
 		'status'=>0
 	);
-	 
+	
+/**
+ * 判断是否超过接受订餐时间
+ */
+date_default_timezone_set("Asia/Shanghai");//set time zone
+$now = date("H:i");//
+if ( strtotime($now)>strtotime("10:10:00") ){
+	$response['status'] = 0 ;
+	$response['content']= array('orderEnable'=>"很遗憾，点餐已经截至。");
+	echo json_encode($response);
+	exit();
+}
+
+	
 /**
  * database parameter
  */
@@ -69,10 +82,10 @@ if( !$result ){
 	exit("加载失败！<br/>原因是：<br/>".$orderMeal->error);
 }
 
-//if $orderEnale!=0, enable to order
-$orderEnale = $result->num_rows;
-$response['status'] = ($orderEnale!=0?1:0);
-$response['content']['orderEnable'] = $orderEnale;
+//if $orderEnable!=0, enable to order
+$orderEnable = $result->num_rows;
+$response['status'] = ($orderEnable!=0?1:0);
+$response['content']['orderEnable'] = "菜单还没准备好，\n订餐请稍后！";
 
 /**
  * 关闭数据库连接

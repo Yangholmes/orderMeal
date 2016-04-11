@@ -84,12 +84,7 @@ function checkOrder(){
 	postData("init.php", checkQuery, function(request){
 		var response = JSON.parse(request.responseText);
 		if( response.status == 0 ){
-			if(response.content.orderEnable == 0){
-				alert("饿了吗？\n\n点餐时间还未到哦~\n");
-			}
-			else{
-				alert("不知道什么原因点不了餐了~\n找管理员问问情况吧~");
-			}
+			alert(response.content.orderEnable);
 			return false;
 		}
 		loadName(response.content.personnel);
