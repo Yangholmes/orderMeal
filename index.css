@@ -50,6 +50,13 @@ main{
 	width: 100%;
 	display: block;
 }
+.selector a#random-meal{
+	text-decoration: underline;
+	font-size: .5em;
+	color: rgb(255, 0, 0);
+	cursor: pointer;
+	margin: 0;
+}
 .selector input{
 	width: 100%;
 	display: block;

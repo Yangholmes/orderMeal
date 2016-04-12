@@ -70,10 +70,30 @@ function eventRegister(){
 	//注册提交订单按键事件
 	var orderForm = document.getElementById('order-form');
 	orderForm.onsubmit = function(){return onSubmit(orderForm)};
+	//注册随机点餐链接事件
+	var aRandomMeal = document.getElementById('random-meal');
+	aRandomMeal.onclick = function(){onRandomClick(aRandomMeal)};
 }
 function onSubmit(handle){
 	localStorage.nameSelectedIndex = handle.name.selectedIndex;
 	//return false;
+}
+function onRandomClick(handle){
+	var randomSelection = Math.round( Math.random()*3 );
+	var mealSelector = handle.previousElementSibling;//获取上一个兄节点。
+	//随机跳动动画
+	var i=0;
+	var randomAnimation = setInterval( function(){
+			mealSelector.selectedIndex = Math.round( Math.random()*3 );
+			i++;
+			if(i==50){
+				clearInterval(randomAnimation);
+				alert("选个" + 
+					mealSelector.options[mealSelector.selectedIndex].value + 
+					"?");
+			}
+		},10);
+	// mealSelector.selectedIndex = randomSelection;
 }
 function loadMenu(remark){
 	var remarkCtrl = document.getElementById('remarks');

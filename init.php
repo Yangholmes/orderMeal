@@ -28,10 +28,10 @@
  * 判断是否超过接受订餐时间
  */
 date_default_timezone_set("Asia/Shanghai");//set time zone
-$now = date("H:i");//
+$now = date("H:i:s");//
 if ( strtotime($now)>strtotime("10:10:00") ){
 	$response['status'] = 0 ;
-	$response['content']= array('orderEnable'=>"很遗憾，点餐已经截至。");
+	$response['content']= array('orderEnable'=>"很遗憾，点餐已经截止。");
 	echo json_encode($response);
 	exit();
 }
