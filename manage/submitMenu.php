@@ -41,6 +41,7 @@ if ($orderMeal->connect_errno) {
 $table = "order%";
 $query = "show tables like '$table'";
 $result = $orderMeal->query($query);
+echo(json_encode($result));
 
 if( !$result ){
 	exit("加载失败！<br/>原因是：<br/>".$orderMeal->error);
