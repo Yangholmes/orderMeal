@@ -1,14 +1,14 @@
 <?php
 
 	/**
-	 * ÅĞ¶Ï²Ù×÷ÏµÍ³
+	 * åˆ¤æ–­æ“ä½œç³»ç»Ÿ
 	 * WINNT, Linux
 	 */
 	$OS = PHP_OS;
 	
 	/**
-	 * ·µ»ØÇ°¶ËÊı¾İ¸ñÊ½
-	 * type: ¹ØÁªÊı×é
+	 * è¿”å›å‰ç«¯æ•°æ®æ ¼å¼
+	 * type: å…³è”æ•°ç»„
 	 */
 	$response = array(
 		'queryType'=>0, 
@@ -26,12 +26,12 @@ $database = "orderMeal";
 
 @ $orderMeal = new mysqli($host, $username, $psw, $database);
 if ($orderMeal->connect_errno) {
-	echo "Êı¾İ¿âÁ¬½ÓÊ§°ÜÁË£¬Ê§°Ü´úºÅÎª£º"."(".$orderMeal->connect_errno .")</br> ".$orderMeal->connect_error ."<br/>";
+	echo "æ•°æ®åº“è¿æ¥å¤±è´¥äº†ï¼Œå¤±è´¥ä»£å·ä¸ºï¼š"."(".$orderMeal->connect_errno .")</br> ".$orderMeal->connect_error ."<br/>";
 	exit("Uable to access to database.");
 }
 
 /**
- * ²éÑ¯½ñÈÕ¶©µ¥
+ * æŸ¥è¯¢ä»Šæ—¥è®¢å•
  */
 $table = "order".date('ymd');//
 
@@ -39,7 +39,7 @@ $array_count = array();
 $count_total = 0;
 $count_X = array( 'A'=>0, 'B'=>0, 'C'=>0, 'D'=>0, );
 
-//²éÑ¯¶©µ¥ÏêÇé
+//æŸ¥è¯¢è®¢å•è¯¦æƒ…
 $query = "select personnel.name, $table.meal 
 		 from personnel right join $table 
 		 on personnel.personnelId = $table.personnelId";
@@ -55,7 +55,7 @@ for($i=0;$i<$count_total;$i++){
 $response['content']=array('details'=>$array_count);
 $response['content']['count_total'] = $count_total;
 
-//²éÑ¯¸÷Àà¶©µ¥ÊıÄ¿
+//æŸ¥è¯¢å„ç±»è®¢å•æ•°ç›®
 while( list($X,$count) = each($count_X) ){
 	$query = "select $table.meal 
 			 from $table 

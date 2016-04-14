@@ -17,6 +17,21 @@ queryMsg.prototype = {
 };
 
 /**
+ * mysql配置信息
+ * [Object]
+ */
+function mysqlConfig(host, usrname, psw, database){
+	this.host = host;
+	this.usrname = usrname;
+	this.psw = psw;
+	this.database = database;
+}
+mysqlConfig.prototype = {
+	constructor: mysqlConfig,
+	toString: function(){ return this; },
+};
+
+/**
  * Use JSON decode to send a HTML POST request
  * @param callback: function that used to deal with request
  * @param data: original data to post
@@ -64,6 +79,7 @@ function postData(url, data, callback) {
 	request.send(encodeFormData(data));			// Send form-encoded data
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 function init(){
 	eventInit();
 }
@@ -83,13 +99,21 @@ function onCmdKeyDown(event){
 }
 function sendCmdQuery(cmd){
 	var cmdQuery = new queryMsg();
+	var usrInfo = myConfig.usrname + ":" + myConfig.psw + "@" + myConfig.host;
 	cmdQuery.queryType = 1;
-	cmdQuery.content = { 'cmd': cmd };
+	cmdQuery.content = { 'connection': {'usr-info': usrInfo},
+						 'database': myConfig.database, 
+						 'cmd': cmd};
 	cmdQuery.status = 1;
-	
+	console.log(cmdQuery);
 	postJSON("mysql-query.php", cmdQuery, function(request){
-		console.log(request);
+		var response = JSON.parse(request.responseText);
+		var usrInfo = response.content.usr_info.split(/:|@/);
+		myConfig.usrname = usrInfo[0];
+		myConfig.psw     = usrInfo[1];
+		myConfig.host    = usrInfo[2];
 	});
 }
 
 window.onload = init();
+var myConfig = new mysqlConfig();

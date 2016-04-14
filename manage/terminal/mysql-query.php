@@ -1,38 +1,53 @@
 <?php
 
+require_once('yangLib.php');
+
 $json = $_POST['data'];
 
 $data = json_decode($json);//Obj
 
-$cmd = $data->content->cmd;//»ñÈ¡Ö¸Áî
+$cmd = $data->content->cmd;//è·å–æŒ‡ä»¤
 
-$pattern = "/^mysql -h|^mysql -u/";//mysqlµÇÂ½±í´ïÊ½
+$pattern = "/^mysql -h|^mysql -u/";//mysqlç™»é™†è¡¨è¾¾å¼
 
-if( preg_match( $pattern, $cmd) ){//ÅĞ¶ÏÊÇ·ñĞèÒªµÇÂ½mysql
+if( preg_match( $pattern, $cmd) ){//åˆ¤æ–­æ˜¯å¦éœ€è¦ç™»é™†mysql
 	$patterns = array( "/-h [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|-h [a-zA-Z0-9\-\.]+/", 
 					  "/-u [a-zA-Z0-9_\-\.]+/", 
 					  "/-p .+/");
 	$matches = preg_match_patterns($patterns, $cmd);
 
 	@ $mysqli = new mysqli("$matches[0]", "$matches[1]", "$matches[2]");
-	
-	echo(json_encode());
+	$content = array("queryResult"=>'');
+	if($mysqli->connect_errno){
+		$content['connect_errno'] = $mysqli->connect_errno;
+		$content['connect_error'] = $mysqli->connect_error;
+		$content['host_info'] = $mysqli->host_info;	
+		$connectMsg = new mysqlMsg( 0, $content, 1 );
+	}
+	else{
+		$content['host_info'] = $mysqli->host_info;
+		$content['usr_info'] =  "$matches[1]:$matches[2]@$matches[0]";
+		$connectMsg = new mysqlMsg( 1, $content, 1 );
+	}
+	// $result = $mysqli->query ( "use ordermeal" );
+	// $result = $mysqli->query ( "select * from personnel" );
+	// echo json_encode($result);
+	echo json_encode($connectMsg);
 }
 
+class mysqlMsg
+{
+	public $query = 0;
+	public $content = array("queryResult"=>'');
+	public $status = 0;
 
-/**
- * Ò»¸ö×Ö·û´®Æ¥Åä¶à¸öÄ£Ê½
- * @param array $patterns: several patterns, the pattern to search for, as a string.
- * @param string $input: The input string.
- * @return: array, results of search.
- */
-function preg_match_patterns(array $patterns , string $input){
-	$returns = array();
-	while(list($i, $pattern) = each($patterns)){
-		if( preg_match( $pattern, $input, $matches) )//Æ¥Åä³öhostname¡¢username¡¢password
-			array_push( $returns, substr($matches[0], 3) );
-		else
-			array_push( $returns, null );
+	function __construct($query, $content, $status){
+		$this->query   = $query;
+		$this->content = $content;
+		$this->status  = $status;
 	}
-	return $returns;
+
+	function __destruct(){
+
+	}
 }
