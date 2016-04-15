@@ -103,16 +103,11 @@ else{
 				$content["queryResult"] = $mysqli->error;
 			}
 			else{
-				$content["queryResult"] = $result;//将查询结构返回到窗口
+				$content["queryResult"] = $result->fetch_all(MYSQLI_ASSOC);//将查询结构返回到窗口
 			}
 			
 			$connectMsg = new mysqlMsg( 1, $content, 1 );
-			echo json_encode($connectMsg);
-
-
-
-
-			
+			echo json_encode($connectMsg);	
 		}
 	}
 }
