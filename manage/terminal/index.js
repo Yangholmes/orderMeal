@@ -40,7 +40,8 @@ function postJSON(url, data, callback){
 	var request = new XMLHttpRequest();
 	request.open("POST", url);
 	request.onreadystatechange = function(){
-		callback(request);
+		if (request.readyState === 4 && callback)	// When response is complete
+			callback(request);						// call the callback.
 	};
 	// request.setRequestHeader("Content-Type", "application/json");
 	request.setRequestHeader("Content-Type",	// Set Content-Type
@@ -101,19 +102,22 @@ function sendCmdQuery(cmd){
 	var cmdQuery = new queryMsg();
 	var usrInfo = myConfig.usrname + ":" + myConfig.psw + "@" + myConfig.host;
 	cmdQuery.queryType = 1;
-	cmdQuery.content = { 'connection': {'usr-info': usrInfo},
+	cmdQuery.content = { 'connection': {'usr_info': usrInfo},
 						 'database': myConfig.database, 
 						 'cmd': cmd};
 	cmdQuery.status = 1;
 	console.log(cmdQuery);
+	console.log(myConfig);
 	postJSON("mysql-query.php", cmdQuery, function(request){
 		var response = JSON.parse(request.responseText);
-		var usrInfo = response.content.usr_info.split(/:|@/);
-		myConfig.usrname = usrInfo[0];
-		myConfig.psw     = usrInfo[1];
-		myConfig.host    = usrInfo[2];
+		var usr = response.content.connection.usr_info.split(/:|@/);//当mysql指令有误，或者用户名密码不匹配时，usr_info为空，此句会抛出错误。
+		myConfig.usrname  = usr[0];
+		myConfig.psw      = usr[1];
+		myConfig.host     = usr[2];
+		myConfig.database = response.content.database;
+		console.log(myConfig);
 	});
 }
 
 window.onload = init();
-var myConfig = new mysqlConfig();
+var myConfig = new mysqlConfig('', '', '', '');

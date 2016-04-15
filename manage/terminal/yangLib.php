@@ -30,11 +30,11 @@ function obj2Array( $obj ){
  * @return: array, results of search.
  */
 function preg_match_patterns(array $patterns , string $input){
-	$returns = array();
-	while(list($i, $pattern) = each($patterns)){
-		if( preg_match( $pattern, $input, $matches) )//匹配出hostname、username、password
-			array_push( $returns, substr($matches[0], 3) );
-		else
+	$returns = array();													//保存匹配项
+	while(list($i, $pattern) = each($patterns)){						//若匹配
+		if( preg_match( $pattern, $input, $matches) )
+			array_push( $returns, substr($matches[0], 3) );				//去除-h、-u、-p 建议另起一锅
+		else															//若不匹配
 			array_push( $returns, null );
 	}
 	return $returns;
