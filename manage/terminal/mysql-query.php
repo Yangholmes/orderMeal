@@ -71,7 +71,6 @@ else{
 					$database = preg_match( '/ *[a-zA-Z]+$/', $cmd, $databases) ? $databases[0] : null ;
 					$database = trim($database);
 					$content["queryResult"] = "Database changed";
-					$content["database"] = $database;
 					break;
 				case ('CREAT'|'creat'):
 					$content["queryResult"] = "Query OK, 1 rows affected";
@@ -103,11 +102,15 @@ else{
 				$content["queryResult"] = $mysqli->error;
 			}
 			else{
-				$content["queryResult"] = $result->fetch_all(MYSQLI_ASSOC);//将查询结构返回到窗口
+				$content["database"] = $database;
+				$content["queryResult"] = //将查询结构返回到窗口
+					is_object($result) ? $result->fetch_all(MYSQLI_ASSOC) : $result;
 			}
 			
+			if(is_object($result)) $result->free();
+			@ $mysqli->close();
 			$connectMsg = new mysqlMsg( 1, $content, 1 );
-			echo json_encode($connectMsg);	
+			echo json_encode($connectMsg);
 		}
 	}
 }

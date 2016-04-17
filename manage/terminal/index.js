@@ -19,6 +19,7 @@ queryMsg.prototype = {
 /**
  * mysql配置信息
  * [Object]
+ * 变量含义一如其名
  */
 function mysqlConfig(host, usrname, psw, database){
 	this.host = host;
@@ -120,4 +121,4 @@ function sendCmdQuery(cmd){
 }
 
 window.onload = init();
-var myConfig = new mysqlConfig('', '', '', '');
+var myConfig = new mysqlConfig('', '', '', '');//全局变量，用于保持连接信息

@@ -2,9 +2,17 @@
 html{
 	width: 98%; height: 100%;
 }
+
+@font-face{
+	font-family: YaHeiConsola;
+	src: url('coding-fonts/YaHei.Consolas.1.11b.ttf');
+	font-weight: 400;
+	font-style: normal;
+}
+
 body{
 	width:100%; height: 100%;
-	font-family: Monaco, Consolas, monospace, sans-serif;
+	font-family: 'YaHeiConsola', 'Monaco', 'Consolas', 'monospace', sans-serif;
 	font-size: 100%;
 	background: url("background.jpg");
 	background-repeat: repeat;
@@ -19,6 +27,7 @@ main{
 textarea{
 	width: 100%;
 	font-size: 2.5em;
+	font-family: 'Consolas', 'YaHeiConsola', 'Monaco', sans-serif;
 }
 #terminal-output textarea{
 	background-color: rgba(0, 0, 0, .7);
@@ -27,8 +36,8 @@ textarea{
 	height: 20em;
 }
 #terminal-input textarea{
-	background-color: rgba(50,50,200,.7);
-	color: rgb(200,200,200);
+	background-color: rgba(50,200,50,.7);
+	color: rgb(250,250,250);
 	border: solid 2px rgb(255,50,50);
 	height: 5em;
 }
