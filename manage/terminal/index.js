@@ -29,7 +29,78 @@ function mysqlConfig(host, usrname, psw, database){
 }
 mysqlConfig.prototype = {
 	constructor: mysqlConfig,
+	update: function(){
+		var args = arguments;//
+		var that = this;//
+		var i = 0;
+		for(p in that){
+			if(typeof this[p] === "function") continue;//避开方法 //!应避开非继承的属性，还未做
+			if(args[i] == null || args[i] == undefined) continue;//避开空值
+			that[p] = args[i];
+			i++
+		}
+		return that;//支持链式调用
+	},
 	toString: function(){ return this; },
+};
+
+/**
+ * 信息显示模块类
+ * [Object]
+ * constructor: initial msgDisplay node
+ */
+function msgDisplay( nodeId ){
+	if( nodeId == null || nodeId == '' || nodeId == undefined ){
+		this.disObj = document.getElementsByClassName('msgDisplay')[0];
+	}
+	else{
+		this.disObj = document.getElementById(nodeId);
+	}
+}
+msgDisplay.prototype = {
+	constructor: msgDisplay,
+	toString: function(){ return this.exportAllLines(); },
+
+	maxRowsNum: 40, 	//最多可以显示几行，可以通过setRowsNum()更改
+	rowsNum: 0, 		//现在一共有几行
+	lineArray: [], 		//用于保存正在显示的所有行，每一行为一个数组元素
+
+	//从尾部插入一行，lineType指明了插入一行的类型
+	insertLine: function( newLine, lineType ){
+		var newHTML = '';//new html
+		switch(lineType){
+			case 0: 	//输入指令显示
+				newHTML = '<span class="input">' + newLine + '</span>';
+				break;
+			case 1: 	//输出结果(无错误)
+				newHTML = '<span class="output">' + newLine + '</span>';
+				break;
+			case 2: 	//输出结果(有错误)
+				newHTML = '<span class="output error">' + newLine + '</span>';
+				break;
+			default: 	//默认以case1处理
+				newHTML = '<span class="output">' + newLine + '</span>';
+				break;
+		}
+		if( this.lineArray.push(newHTML) > this.maxRowsNum )
+			this.lineArray.shift();
+		this.disObj.innerHTML = this.exportAllLines();
+	},
+	//设置最多可以显示几行
+	setRowsNum: function( maxRowsNum ){
+		this.maxRowsNum = maxRowsNum;
+		return this;
+	},
+	//计算现在到第几行
+	countRowsNum: function(){
+		this.rowsNum = this.disObj.getElementsByTagName('span').length;
+		return this.rowsNum;
+	},
+	//导出内容，字符串格式
+	exportAllLines: function(){
+		var allLines = this.lineArray.join('');
+		return allLines;
+	},
 };
 
 /**
@@ -96,6 +167,7 @@ function onCmdKeyDown(event){
 	if(event.ctrlKey){
 		if(event.keyCode == 13){
 			sendCmdQuery( cmdInput.value );
+			cmdInput.value = null;
 		}
 	}
 }
@@ -107,18 +179,20 @@ function sendCmdQuery(cmd){
 						 'database': myConfig.database, 
 						 'cmd': cmd};
 	cmdQuery.status = 1;
-	console.log(cmdQuery);
-	console.log(myConfig);
 	postJSON("mysql-query.php", cmdQuery, function(request){
 		var response = JSON.parse(request.responseText);
 		var usr = response.content.connection.usr_info.split(/:|@/);//当mysql指令有误，或者用户名密码不匹配时，usr_info为空，此句会抛出错误。
-		myConfig.usrname  = usr[0];
-		myConfig.psw      = usr[1];
-		myConfig.host     = usr[2];
-		myConfig.database = response.content.database;
-		console.log(myConfig);
+		var queryResult = response.content.queryResult;
+		var query = response.query;
+
+		myConfig.update(usr[2], usr[0], usr[1], response.content.database);//写配置，记录mysql配置信息
+
+		//显示信息
+		myMsgDis.insertLine(cmd,0);
+		query!=0 ? myMsgDis.insertLine(queryResult,1) : myMsgDis.insertLine(queryResult,2);
 	});
 }
 
 window.onload = init();
 var myConfig = new mysqlConfig('', '', '', '');//全局变量，用于保持连接信息
+var myMsgDis = new msgDisplay('msgDisplay');//全局变量，显示区域

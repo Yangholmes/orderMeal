@@ -11,6 +11,7 @@ $cmd = $data->content->cmd;//获取指令
 $usrInfo = $data->content->connection->usr_info;//获取用户信息 user:password@host
 
 $pattern = "/^mysql -h|^mysql -u/";//mysql登陆表达式
+$connectMsg = new mysqlMsg( 0, '', 1 );
 
 if( preg_match( $pattern, $cmd) ){//判断是否需要登陆mysql
 	$patterns = array( "/-h [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|-h [a-zA-Z0-9\-\.]+/", 
@@ -27,14 +28,17 @@ if( preg_match( $pattern, $cmd) ){//判断是否需要登陆mysql
 		$connection['host_info'] = $mysqli->host_info;
 		$content = array("connection"=>$connection,
 						 "queryResult"=>"Unable to connect Mysql!");
-		$connectMsg = new mysqlMsg( 0, $content, 1 );
+		// $connectMsg = new mysqlMsg( 0, $content, 1 );
+		$connectMsg->content = $content;
 	}
 	else{//connect mysql success!
 		$connection['host_info'] = $mysqli->host_info;
 		$connection['usr_info'] =  "$matches[1]:$matches[2]@$matches[0]";
 		$content = array("connection"=>$connection,
 						 "queryResult"=>"Mysql Connected!");
-		$connectMsg = new mysqlMsg( 1, $content, 1 );
+		// $connectMsg = new mysqlMsg( 1, $content, 1 );
+		$connectMsg->query = 1;
+		$connectMsg->content = $content;
 	}
 	@ $mysqli->close();
 
@@ -56,7 +60,8 @@ else{
 			$connection['usr_info'] = null;
 			$content = array("connection"=>$connection,
 						 "queryResult"=>"Unable to connect Mysql!");
-			$connectMsg = new mysqlMsg( 0, $content, 1 );
+			// $connectMsg = new mysqlMsg( 0, $content, 1 );
+			$connectMsg->content = $content;
 		}
 		else{//connect mysql success!
 			$database = $data->content->database;//取出database
@@ -86,7 +91,7 @@ else{
 						$mysqli->select_db($database);
 						if($mysqli->errno){}//数据库选择失败
 						else{
-							$result = $mysqli->query($cmd);//执行mysql指令
+							// $result = $mysqli->query($cmd);//执行mysql指令
 							/*$content["queryResult"] = $result;
 							$connectMsg = new mysqlMsg( 1, $content, 1 );
 							echo json_encode($connectMsg);*/
@@ -100,16 +105,19 @@ else{
 			//判断指令执行情况
 			if($mysqli->errno/* == 1046*/){//No database selected
 				$content["queryResult"] = $mysqli->error;
+				$connectMsg->content = $content;
 			}
 			else{
 				$content["database"] = $database;
 				$content["queryResult"] = //将查询结构返回到窗口
 					is_object($result) ? $result->fetch_all(MYSQLI_ASSOC) : $result;
+				$connectMsg->query = 1;
+				$connectMsg->content = $content;
 			}
 			
 			if(is_object($result)) $result->free();
 			@ $mysqli->close();
-			$connectMsg = new mysqlMsg( 1, $content, 1 );
+			// $connectMsg = new mysqlMsg( 1, $content, 1 );
 			echo json_encode($connectMsg);
 		}
 	}

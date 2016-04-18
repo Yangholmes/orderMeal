@@ -29,7 +29,7 @@ function obj2Array( $obj ){
  * @param string $input: The input string.
  * @return: array, results of search.
  */
-function preg_match_patterns(array $patterns , string $input){
+function preg_match_patterns($patterns, $input){
 	$returns = array();													//保存匹配项
 	while(list($i, $pattern) = each($patterns)){						//若匹配
 		if( preg_match( $pattern, $input, $matches) )
