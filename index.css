@@ -105,8 +105,9 @@ footer .copyrightInformation{
 		margin: 0em auto;
 	}
 	body{
-		/*background: url('background.jpg');*/
+		background: url('illustration-rotate.png');
 		background-repeat: no-repeat; 
-		background-size: initial;
+		background-size: 300px;
+		background-position: right center;
 	}
 }
