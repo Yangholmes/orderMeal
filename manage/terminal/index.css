@@ -67,3 +67,17 @@ textarea,
 #terminal-output #msgDisplay span.output.error{
 	color: rgb(255, 106, 106);
 }
+/* 查询结果表格样式 */
+#terminal-output #msgDisplay span.output table{
+	border: solid 1px rgb(255, 255, 255);
+	border-collapse:collapse;
+	margin-left: 2em;
+}
+#terminal-output #msgDisplay span.output table,
+#terminal-output #msgDisplay span.output th,
+#terminal-output #msgDisplay span.output td,
+#terminal-output #msgDisplay span.output tr{
+	border: solid 1px rgb(255, 255, 255);
+	text-align: center;
+	/*border-collapse:collapse;*/
+}

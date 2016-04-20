@@ -188,6 +188,7 @@ function sendCmdQuery(cmd){
 		myConfig.update(usr[2], usr[0], usr[1], response.content.database);//写配置，记录mysql配置信息
 
 		//显示信息
+		queryResult = flatResultObj(queryResult);
 		myMsgDis.insertLine(cmd,0);
 		query!=0 ? myMsgDis.insertLine(queryResult,1) : myMsgDis.insertLine(queryResult,2);
 	});
@@ -196,3 +197,31 @@ function sendCmdQuery(cmd){
 window.onload = init();
 var myConfig = new mysqlConfig('', '', '', '');//全局变量，用于保持连接信息
 var myMsgDis = new msgDisplay('msgDisplay');//全局变量，显示区域
+
+function flatResultObj(queryResult){
+	var table = '';//
+	var th = '';//
+	var td = '';//
+	var trh = ''; var trb = '';
+
+	if(queryResult.constructor === Array){
+		if(queryResult[0].constructor === Object){
+			for( p in queryResult[0]){//
+				th = th + "<th>" + p + "</th>"//
+			}
+			trh = "<tr>" + th + "</tr>";//
+			for(var i=0;i<queryResult.length;i++){//
+				for(p in queryResult[i]){
+					td = td + "<td>" + queryResult[i][p] + "</td>";//
+				}
+				trb = trb + "<tr>" + td + "</tr>";//
+				td = '';
+			}
+		table = "<table>" + trh + trb + "</table>" ;//
+		}
+		return table;
+	}
+	else{
+		return queryResult;
+	}
+}
