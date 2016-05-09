@@ -73,7 +73,7 @@ else{
 			$keyWord = trim($keyWord);
 			switch($keyWord){//判断DDL、DML、DCL、DQL
 				case ('USE'|'use'):
-					$database = preg_match( '/ *[a-zA-Z]+$/', $cmd, $databases) ? $databases[0] : null ;
+					$database = preg_match( '/ *[a-zA-Z0-9-_]+$/', $cmd, $databases) ? $databases[0] : null ;
 					$database = trim($database);
 					$content["queryResult"] = "Database changed";
 					break;

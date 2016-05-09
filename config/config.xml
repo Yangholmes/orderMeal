@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mysql>
+<xtrConfig></xtrConfig>
+<usrConfig>
+	<host>localhost</host>
+	<usrname>root</usrname>
+	<password>1001</password>
+	<database>ordermeal</database>
+</usrConfig>
+<mysqlInfo></mysqlInfo>
+</mysql>

@@ -19,14 +19,16 @@ $fail = "<h1 style=\"font-size: 2em; margin: 2em 0;\">点餐失败！<br/>中午
 /**
  * database parameter
  */
-$host = "localhost";
-$username = "root";//
-$psw = "1001";//
-$database = "orderMeal";
+require_once("config/mysqlConfig.php");
+$url = "config/config.xml";
+$host = (string)xmlFileRead($url)->usrConfig->host;//"localhost"
+$username = (string)xmlFileRead($url)->usrConfig->usrname;//"root"
+$psw = (string)xmlFileRead($url)->usrConfig->password;//"1001"
+$database = (string)xmlFileRead($url)->usrConfig->database;//"orderMeal"
 
 @ $orderMeal = new mysqli($host, $username, $psw, $database);
 if ($orderMeal->connect_errno) {
-	echo "数据库连接失败了，失败代号为："."(".$orderMeal->connect_errno .")</br> ".$orderMeal->connect_error ."<br/>";
+	echo "数据库连接失败了，失败代号为：($orderMeal->connect_errno)</br> $orderMeal->connect_error <br/>";
 	exit("Uable to access to database.");
 }
 

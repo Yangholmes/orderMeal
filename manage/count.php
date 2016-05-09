@@ -19,10 +19,12 @@
 /**
  * database parameter
  */
-$host = "localhost";
-$username = "root";//
-$psw = "1001";//
-$database = "orderMeal";
+require_once("../config/mysqlConfig.php");
+$url = "../config/config.xml";
+$host = (string)xmlFileRead($url)->usrConfig->host;//"localhost"
+$username = (string)xmlFileRead($url)->usrConfig->usrname;//"root"
+$psw = (string)xmlFileRead($url)->usrConfig->password;//"1001"
+$database = (string)xmlFileRead($url)->usrConfig->database;//"orderMeal"
 
 @ $orderMeal = new mysqli($host, $username, $psw, $database);
 if ($orderMeal->connect_errno) {
