@@ -106,7 +106,7 @@ function checkOrder(){
 		var response = JSON.parse(request.responseText);
 		if( response.status == 0 ){
 			alert(response.content.orderEnable);
-			shake('name','','',1000,100);
+			shake('name','',10,5000,10);
 			submitOreder.disabled = true; submitOreder.style.backgroundColor = 'black';
 			return false;
 		}

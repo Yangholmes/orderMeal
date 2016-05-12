@@ -65,6 +65,9 @@ yangImgInput.prototype = {
 		styleElt.innerHTML = style;
 		document.getElementsByTagName('head')[0].appendChild(styleElt);
 	},
+	_update: function(){
+
+	},
 	_replaceId: function(text){
 		var instanceIdRegExp = '/' + this.id + '/g';
 		return text.replace(instanceIdRegExp, '{yang-img-input-id}');
