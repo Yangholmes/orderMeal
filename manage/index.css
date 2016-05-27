@@ -99,6 +99,9 @@ main{
 	vertical-align: center;
 	text-align: center;
 }
+.order table caption{
+	margin: 0 0 1em 0;
+}
 .order table, th, td
 {
 	border: 1px solid black;

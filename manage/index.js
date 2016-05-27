@@ -77,6 +77,9 @@ function init(){
 	//注册统计按键事件
 	var countButton = document.getElementById('count-button');
 	countButton.onclick = function(){onClick(countButton)};
+	//注册未点餐按键事件
+	var mostusedButton = document.getElementById('mostused-button');
+	mostusedButton.onclick = function(){onMostusedClick(mostusedButton)};
 	//注册提交菜单按键事件
 	var menuForm = document.getElementById('menu-form');
 	menuForm.onsubmit = function(){return onSubmit(menuForm)};
@@ -139,6 +142,16 @@ function onClick(handle){
 		insertTable(response);
 	});
 }
+function onMostusedClick(handle){
+	if(!handle){
+		return false;
+	}
+	var countQuery = new queryMsg(1, "mostused", 1);
+	postData("count.php", countQuery, function(request){
+		var response = JSON.parse(request.responseText);
+		console.log(response);
+	});
+}
 function onSubmit(form){
 	if( form.menu.value == null || form.menu.value == "" ){
 		//alert("请上传菜单！");
@@ -167,7 +180,8 @@ function insertTable(data){
 	}
 	detailsTb.innerHTML = eachRow;
 }
+function insertMostusedTable(){
+	
+}
 
 window.onload = init();
-
-

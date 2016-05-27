@@ -13,7 +13,15 @@
 	 * WINNT, Linux
 	 */
 	$OS = PHP_OS;
-	
+
+	/**
+	 * 字符编码
+	 * 1: utf8
+	 * 0: other
+	 */
+	$charset = 'utf8'; //
+	$chartype = 1;
+
 	/**
 	 * 返回前端数据格式
 	 * type: 关联数组
@@ -32,8 +40,8 @@ $now = date("H:i:s");//
 if ( strtotime($now)>strtotime("10:10:00") ){
 	$response['status'] = 0 ;
 	$response['content']= array('orderEnable'=>"很遗憾，点餐已经截止。");
-	echo json_encode($response);
-	exit();
+	// echo json_encode($response);
+	// exit();
 }
 
 	
@@ -54,6 +62,15 @@ if ($orderMeal->connect_errno) {
 }
 
 /**
+ * 查询数据库编码
+ * 默认编码是utf8
+ */
+$query = "SHOW VARIABLES LIKE 'character_set_connection'";
+$charsetQuery = $orderMeal->query($query);
+$charset = $charsetQuery->fetch_assoc()['Value'];
+$chartype = ($charset == 'utf8') ? 1 : 0;
+
+/**
  * 查询人员列表
  */
 $table = "personnel";//
@@ -68,7 +85,8 @@ $num_personnel = $personnel->num_rows;
 $array_personnel = array();
 for($i=0;$i<$num_personnel;$i++){
 	$row = $personnel->fetch_assoc();
-	$array_personnel[$i] = $row['name'];
+	// $array_personnel[$i] = $row['name'];
+	$array_personnel[$i] = $chartype ? $row['name'] : iconv( $charset,"utf-8", $row['name'] );
 }
 //
 $response['content']=array('personnel'=>$array_personnel);
@@ -85,7 +103,8 @@ if( !$result ){
 }
 
 //if $orderEnable!=0, enable to order
-$orderEnable = $result->num_rows;
+// $orderEnable = $result->num_rows;'
+$orderEnable = 1;
 $response['status'] = ($orderEnable!=0?1:0);
 $response['content']['orderEnable'] = "菜单还没准备好，\n订餐请稍后！";
 

@@ -37,7 +37,6 @@ if ($orderMeal->connect_errno) {
  */
 //防止重复，判断是否点过餐
 $table = "order".date('ymd');//生成今日订单表
-
 $query = "select $table.orderId 
 		 from personnel, $table 
 		 where 
@@ -50,13 +49,41 @@ $repeat = $result->num_rows;
 //如果$repeat==0，说明还未点过餐，则新增一条记录；
 //如果$repeat!=0，说明还已点过餐，则修改一条记录。
 $query = ($repeat != 0)? 
-		 "update personnel, $table set $table.meal = '$meal' where $table.personnelId = personnel.personnelId and personnel.name = '$name'" 
+		 "update personnel, $table 
+		 set $table.meal = '$meal' 
+		 where $table.personnelId = personnel.personnelId 
+		 and personnel.name = '$name'" 
 		 : 
 		 "insert into $table(meal, personnelId) values ('$meal', (select personnelId from personnel where personnel.name='$name'))";
 $result = $orderMeal->query($query);
 
 if( !$result ){
 	exit($fail."原因是：<br/>".$orderMeal->error);
+}
+
+/**
+ * 更新常点餐名单
+ */
+$table = "mostused";
+$query =	"select $table.*
+			from personnel, $table
+			where $table.personnelId = personnel.personnelId
+			and personnel.name = '$name'";
+$result = $orderMeal->query($query);
+if($result->num_rows === 1){ //常点餐名单中已经存在的人
+	$useInfo = $result->fetch_assoc(); //读取查询结果
+	$frequency = ($useInfo['frequency'])+1; //使用频率
+	$mealCount = ($useInfo[$meal])+1; //统计点餐次数
+	$query =	"update $table, personnel
+				set $table.frequency = $frequency, $table.$meal = $mealCount
+				where $table.personnelId = personnel.personnelId 
+				and personnel.name = '$name'";
+	$result = $orderMeal->query($query); //写入数据库
+}
+else if($result->num_rows === 0){ //常点餐名单中还未有记录的人
+	$query =	"insert into $table(personnelId, frequency, $meal)
+				values ((select personnelId from personnel where personnel.name = '$name'), 1, 1)";
+	$result = $orderMeal->query($query);
 }
 
 echo $success;
