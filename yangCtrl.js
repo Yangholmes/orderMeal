@@ -20,18 +20,18 @@ yangImgInput.prototype = {
 				'<div id="{yang-img-input-id}-touch-layout" class="yang-img-input-touch-layout">' + 
 					'<div id="{yang-img-input-id}-mask" class="yang-img-input-mask"></div>' + 
 					'<div id="{yang-img-input-id}-message" class="yang-img-input-message">{yang-img-input-id}-messageText</div>' + 
-					'<img id="{yang-img-input-id}-preview" class="yang-img-input-preview" src="" />' + 
+					'<img id="{yang-img-input-id}-preview" class="yang-img-input-preview" src="" alt="image preview here~">' + 
 				'</div>' + 
 				'<input type="file" id="{yang-img-input-id}-choose" class="yang-img-input-choose" name="{yang-img-input-id}-img" accept="image/*" />',/* + */
 			// '</div>',
 	style: {
-				'yang-img-input': 'margin: 0;',
+				'yang-img-input': 'margin: 0; font-size: 2em; font-weight: bold',
 				'yang-img-input-touch-layout': 'margin: 0; cursor: pointer;', 
 				'yang-img-input-mask': 'position: absolute; transition: background-color .5s;', 
 				'yang-img-input-message': 'color: rgba(220, 220, 220, 0); position: absolute; text-align: center; transition: color .5s;',  
-				'yang-img-input-preview': 'width:100%; height: 100%;', 
+				'yang-img-input-preview': 'width: auto; height: auto;', 
 				'yang-img-input-choose': 'position: absolute; width: 0; visibility: hidden;',
-				// 'yang-img-input-preview': 'min-width: 360px; min-height: 360px;',
+				'yang-img-input-preview': 'min-width: 360px;',
 				//pseudo class :hover
 				'yang-img-input-touch-layout:hover .yang-img-input-mask': 'background-color: rgba(0,0,0,.5);',
 				'yang-img-input-touch-layout:hover .yang-img-input-message': 'color: rgba(230, 230, 230, 1);',
@@ -92,6 +92,9 @@ yangImgInput.prototype = {
 
 				mask.style.height = imgHeight + 'px'; 
 				mask.style.width = imgWidth + 'px';
+				message.style.width = imgWidth + 'px';
+				message.style.height = imgHeight + 'px'; 
+				message.style.lineHeight = imgHeight + 'px';
 		};
 		touchLayout.onmouseout = function(){};
 		imgInput.onchange = function(){

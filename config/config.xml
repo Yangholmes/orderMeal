@@ -4,7 +4,7 @@
 <usrConfig>
 	<host>localhost</host>
 	<usrname>root</usrname>
-	<password>GGJS5630</password>
+	<password>1001</password>
 	<database>ordermeal</database>
 </usrConfig>
 <mysqlInfo></mysqlInfo>

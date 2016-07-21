@@ -149,7 +149,7 @@ function onMostusedClick(handle){
 	var countQuery = new queryMsg(1, "mostused", 1);
 	postData("count.php", countQuery, function(request){
 		var response = JSON.parse(request.responseText);
-		console.log(response);
+		insertMostusedTable(response);
 	});
 }
 function onSubmit(form){
@@ -180,8 +180,22 @@ function insertTable(data){
 	}
 	detailsTb.innerHTML = eachRow;
 }
-function insertMostusedTable(){
-	
+function insertMostusedTable(data){
+	var mostusedTable = document.getElementById('mostused'),
+		mostusedTr = "<tr><th>姓名</th></tr>",
+		caption = "<caption>今日未点餐名单</caption>",
+		details = data.content.details,
+		eachRow = "",
+		i = 0;
+
+	for(var i=0;i<details.length;i++){
+		eachRow = eachRow + "<tr>" +
+					"<td>" + details[i].name + "</td>" +
+					"</tr>";
+	}
+	eachRow = "<tbody>" + eachRow + "</tbody>";
+	mostusedTable.innerHTML = caption + mostusedTr +eachRow;
+
 }
 
 window.onload = init();
