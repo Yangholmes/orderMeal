@@ -10,59 +10,36 @@
 
 	<body>
 		<header>
-			<nav>
-				<ul>
-					<li><a href="terminal/">调试台</a></li>
-					<li><a href="personnel-manage">人员管理</a></li>
-				</ul>
-			</nav>
+			<h1 id="manage-title">配餐器</h1>
 		</header>
 		
-		
+		<!-- main start -->
 		<main>
-			<div class="gallery">
-				<form id="menu-form" enctype="multipart/form-data" action="submitMenu.php" method="post">
-					<div id="menu-preview-touch">
-						<div class="mask"></div>
-						<div class="message"><p>~点击选择菜单上传~</p></div>
-						<img id="menu-preview" src="img.png" />
-					</div>
-					<input type="file" id="choose-file" name="menu" accept="image/png,image/jpg" />
-					<textarea placeholder="备注" name="remarks"></textarea>
-					<input type="submit" id="submit-menu" value="开始接受订餐" />
-				</form>
+			<!-- manage-menu start -->
+			<div id="manage-menu">
+				<h2 class="ancher">菜单</h2> <!-- title -->
+				<div class="yang-input-submit">
+						<label for="submit-menu">开始接受订餐</label>
+						<input type="submit" id="submit-menu" value="开始接受订餐">
+				</div>
+				<div class="yang-input-image" id="menu"></div>
+				<input type="text" placeholder="备注">
 			</div>
-			
-			<div class="order">
-				<input type="button" id="count-button" value="统计今日订单" />
-				<table id="count" class="count-table">
-					<tr>
-						<th>总计</th>
-						<th>A</th>
-						<th>B</th>
-						<th>C</th>
-						<th>D</th>
-					</tr>
-					<tr id="count-td">
-						<!-- <td></td> -->
-					</tr>
-				</table>
-				<table id="details" class="count">
-					<caption>今日点餐名单</caption>
-					<tr>
-						<th>姓名</th>
-						<th>餐</th>
-					</tr>
-					<tbody id="details-tb">
-						<!-- <td></td> -->
-					</tbody>
-				</table>
+			<!-- manage-menu end -->
 
-				<input type="button" id="mostused-button" value="让我来看看，谁还没点餐" />
-				<table id="details" class="count">
-				</table>
+			<!-- manage-statistic start -->
+			<div id="manage-statistic">
+				<h2 class="ancher">统计</h2> <!-- title -->
+				<div id="booked">
+					<div class="yang-input-submit"></div>
+				</div>
+				<div id="unbooked">
+					<div class="yang-input-submit"></div>
+				</div>
 			</div>
+			<!-- manage-statistic end -->
 		</main>
+		<!-- main end -->
 
 		<script type="text/javascript" src="index.js"></script>
 	</body>

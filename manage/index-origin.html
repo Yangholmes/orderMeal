@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="renderer" content="webkit">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="index.css" />
+		<title>配餐</title>
+	</head>
+
+	<body>
+		<header>
+			<!-- <h1 id="manage-title">配餐器</h1> -->
+		</header>
+		
+		
+		<main>
+			<div class="gallery">
+				<form id="menu-form" enctype="multipart/form-data" action="submitMenu.php" method="post">
+					<div id="menu-preview-touch">
+						<div class="mask"></div>
+						<div class="message"><p>~点击选择菜单上传~</p></div>
+						<img id="menu-preview" src="img.png" />
+					</div>
+					<input type="file" id="choose-file" name="menu" accept="image/png,image/jpg" />
+					<textarea placeholder="备注" name="remarks"></textarea>
+					
+					<div class="input-submit" id="">
+						<label for="submit-menu">开始接受订餐</label>
+						<input type="submit" id="submit-menu" value="开始接受订餐" />
+					</div>
+					
+				</form>
+			</div>
+			
+			<div class="order">
+				<input type="button" id="count-button" value="统计今日订单" />
+				<table id="count" class="count-table">
+					<tr>
+						<th>总计</th>
+						<th>A</th>
+						<th>B</th>
+						<th>C</th>
+						<th>D</th>
+					</tr>
+					<tr id="count-td">
+						<!-- <td></td> -->
+					</tr>
+				</table>
+				<table id="details" class="count">
+					<caption>今日点餐名单</caption>
+					<tr>
+						<th>姓名</th>
+						<th>餐</th>
+					</tr>
+					<tbody id="details-tb">
+						<!-- <td></td> -->
+					</tbody>
+				</table>
+
+				<input type="button" id="mostused-button" value="让我来看看，谁还没点餐" />
+				<table id="details" class="count">
+				</table>
+			</div>
+		</main>
+
+		<script type="text/javascript" src="index.js"></script>
+	</body>
+
+</html>
