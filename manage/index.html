@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="renderer" content="webkit">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="index.css" />
+		<title>配餐</title>
+	</head>
+
+	<body>
+		<header>
+			<h1 id="manage-title">配餐器</h1>
+		</header>
+		
+		<!-- main start -->
+		<main>
+			<!-- manage-menu start -->
+			<div class="district" id="manage-menu">
+				<h2 class="ancher">菜单</h2> <!-- title -->
+				<div class="yangSubmitInput">
+						<label for="submit-menu">开始点餐</label>
+						<input type="submit" id="submit-menu" value="">
+				</div>
+				<div class="yangImgInput" id="menu"></div>
+				<input type="text" placeholder="备注">
+			</div>
+			<!-- manage-menu end -->
+
+			<!-- manage-statistic start -->
+			<div class="district" id="manage-statistic">
+				<h2 class="ancher">统计</h2> <!-- title -->
+				<div id="booked">
+					<div class="yangSubmitInput">
+						<label for="statistic-booked">统计订单</label>
+						<input type="submit" id="statistic-booked" value="">
+					</div>
+				</div>
+				<div id="unbook">
+					<div class="yangSubmitInput">
+						<label for="statistic-unbook">统计未点</label>
+						<input type="submit" id="statistic-unbook" value="">
+					</div>
+				</div>
+			</div>
+			<!-- manage-statistic end -->
+		</main>
+		<!-- main end -->
+
+		<script type="text/javascript" src="index.js"></script>
+	</body>
+
+</html>
