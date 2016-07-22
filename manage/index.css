@@ -1,10 +1,11 @@
 @CHARSET "UTF-8";
 
 html{
-	width: 100%;
+	width: 960px; height: auto; min-height: 100%; margin: 0 auto;
+	box-shadow: 2px 2px 50px 0px rgba(0, 0, 0, .75);
 }
 body{
-	width: 960px; height: 100%;
+	width: 800px; height: auto;
 	margin: 0 auto;
 	font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
 	font-size: 100%;
@@ -12,4 +13,62 @@ body{
 p,h1,h2,h3,h4,h5,h6,input,output{
 	padding: 0; margin: 0;
 	font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+	font-size: 1em;
+}
+
+header{
+	height: 200px;
+	width: 100%;
+	font-size: 3.75em;
+	border-bottom: solid 2px gray;
+	line-height: 3.75em;
+}
+
+.district{
+	margin-top: 50px;
+}
+.district *{
+    margin-bottom: 25px;
+}
+.ancher{
+	font-size: 1.875em;
+	width: 3em; height: 1.5em;
+	line-height: 1.5em;
+	text-align: center;
+	color: white;
+	background-color: rgb(192, 192, 192);
+}
+input[type="submit"]{
+    visibility: hidden;
+    position: absolute;
+}
+.yangSubmitInput{
+	font-size: 1em;
+	text-align: center;
+	width: 6em; height: 2em;
+	line-height: 2em;
+	background-color: rgb(200, 22, 35);
+	color: white;
+}
+.yangSubmitInput:hover{
+	cursor: pointer;
+	background-color: rgb(175, 21, 32);
+}
+.yangSubmitInput:hover label{
+	cursor: pointer;
+}
+.yangSubmitInput:active{
+	cursor: pointer;
+	background-color: rgb(200, 22, 35);
+}
+
+#booked,
+#unbook{
+	width: 50%;
+}
+#booked{
+	float: left;
+}
+#unbook{
+	float: right;
 }
