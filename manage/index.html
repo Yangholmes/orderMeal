@@ -18,12 +18,15 @@
 			<!-- manage-menu start -->
 			<div class="district" id="manage-menu">
 				<h2 class="ancher">菜单</h2> <!-- title -->
-				<div class="yangSubmitInput">
-						<label for="submit-menu">开始点餐</label>
-						<input type="submit" id="submit-menu" value="">
-				</div>
-				<div class="yangImgInput" id="menu"></div>
-				<input type="text" placeholder="备注">
+
+				<form id="menu-form" enctype="multipart/form-data">
+					<div class="yangSubmitInput">
+							<label for="submit-menu">开始点餐</label>
+							<input type="submit" id="submit-menu" value="">
+					</div>
+					<div class="yangImgInput" id="menu"></div>
+					<input id="menu-remark" type="text" placeholder="备注" name="remarks">
+				</form>
 			</div>
 			<!-- manage-menu end -->
 
@@ -35,18 +38,22 @@
 						<label for="statistic-booked">统计订单</label>
 						<input type="submit" id="statistic-booked" value="">
 					</div>
+					<div class="statistic-table" id="booked-count"></div>
+					<div class="statistic-table" id="booked-table"></div>
 				</div>
 				<div id="unbook">
 					<div class="yangSubmitInput">
 						<label for="statistic-unbook">统计未点</label>
 						<input type="submit" id="statistic-unbook" value="">
 					</div>
+					<div class="statistic-table" id="unbook-table"></div>
 				</div>
 			</div>
 			<!-- manage-statistic end -->
 		</main>
 		<!-- main end -->
 
+		<script type="text/javascript" src="yangLib/yangCtrl.js"></script>
 		<script type="text/javascript" src="index.js"></script>
 	</body>
 

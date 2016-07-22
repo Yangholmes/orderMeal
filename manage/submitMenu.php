@@ -1,5 +1,15 @@
 <?php
 
+	/**
+	 * 返回前端数据格式
+	 * type: 关联数组
+	 */
+	$response = array(
+		'queryType'=>0, 
+		'content'=>'', 
+		'status'=>0
+	);
+
 $remarks = $_POST['remarks'];
 $img = $_FILES['menu'];
 
@@ -34,7 +44,10 @@ $database = (string)xmlFileRead($url)->usrConfig->database;//"orderMeal"
 
 @ $orderMeal = new mysqli($host, $username, $psw, $database);
 if ($orderMeal->connect_errno) {
-	echo "数据库连接失败了，失败代号为："."(".$orderMeal->connect_errno .")</br> ".$orderMeal->connect_error ."<br/>";
+	// echo "数据库连接失败了，失败代号为："."(".$orderMeal->connect_errno .")<br/> ".$orderMeal->connect_error ."<br/>";
+	$response['content'] = "errorCode".$orderMeal->connect_errno."<br/>error".$orderMeal->connect_error;
+	$response['queryType'] = 1; $response['status'] = 0;
+	echo json_encode($response);
 	exit("Uable to access to database.");
 }
 /**
@@ -46,6 +59,9 @@ $result = $orderMeal->query($query);
 // echo(json_encode($result));
 
 if( !$result ){
+	$response['content'] = "error".$orderMeal->error;
+	$response['queryType'] = 1; $response['status'] = 0;
+	echo json_encode($response);
 	exit("加载失败！<br/>原因是：<br/>".$orderMeal->error);
 }
 
@@ -76,8 +92,13 @@ function creatOrder($db){
 			 meal char(4) not null);";
 	$result = $db->query($query);
 	if( !$result ){
+		$response['content'] = "error".$orderMeal->error;
+		$response['queryType'] = 1; $response['status'] = 0;
+		echo json_encode($response);
 		exit("加载失败！<br/>原因是：<br/>".$orderMeal->error);
 	}
 }
 
-echo "<meta charset='UTF-8'><h1 style=\"font-size: 2em; margin: 2em 0;\">启动成功，可以发通知订餐了~<br/></h1>";
+// echo "<meta charset='UTF-8'><h1 style=\"font-size: 2em; margin: 2em 0;\">启动成功，可以发通知订餐了~<br/></h1>";
+	$response['queryType'] = 1; $response['status'] = 1;
+	echo json_encode($response);
