@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * 
+	 * 获取前端content数据
 	 */
 	$content = $_POST['content'];
 
@@ -10,6 +10,14 @@
 	 * WINNT, Linux
 	 */
 	$OS = PHP_OS;
+
+	/**
+	 * 字符编码
+	 * 1: utf8
+	 * 0: other
+	 */
+	$charset = 'utf8'; //
+	$chartype = 1;
 	
 	/**
 	 * 返回前端数据格式
@@ -20,8 +28,6 @@
 		'content'=>'', 
 		'status'=>0
 	);
-
-
 
 /**
  * database parameter
@@ -38,12 +44,20 @@ if ($orderMeal->connect_errno) {
 	echo "数据库连接失败了，失败代号为："."(".$orderMeal->connect_errno .")</br> ".$orderMeal->connect_error ."<br/>";
 	exit("Uable to access to database.");
 }
+/**
+ * 查询数据库编码
+ * 默认编码是utf8
+ */
+$query = "SHOW VARIABLES LIKE 'character_set_connection'";
+$charsetQuery = $orderMeal->query($query);
+$charset = $charsetQuery->fetch_assoc()['Value'];
+$chartype = ($charset == 'utf8') ? 1 : 0;
 
 $table = "order".date('ymd'); //今日点餐名单
+$array_count = array();
 switch($content){
 	case 'count':
 		//查询今日订单
-		$array_count = array();
 		$count_total = 0;
 		$count_X = array( 'A'=>0, 'B'=>0, 'C'=>0, 'D'=>0, );
 
@@ -52,11 +66,11 @@ switch($content){
 				 from personnel right join $table 
 				 on personnel.personnelId = $table.personnelId";
 		$personnel = $orderMeal->query($query);
-
 		$count_total = $personnel->num_rows;
 
 		for($i=0;$i<$count_total;$i++){
 			$row = $personnel->fetch_assoc();
+			$row = arryConvertEncoding($row, $charset); //转换编码，此函数在库中定义
 			$array_count[$i] = $row;
 		}
 
@@ -84,10 +98,11 @@ switch($content){
 				 	where $table.personnelId=mostused.personnelId )
 				 and personnel.personnelId = mostused.personnelId";
 		$mostused = $orderMeal->query($query);
-		$array_count = array();
+		
 		$count_mostused = $mostused->num_rows;
 		for($i=0;$i<$count_mostused;$i++){
 			$row = $mostused->fetch_assoc();
+			$row = arryConvertEncoding($row, $charset); //转换编码，此函数在库中定义
 			$array_count[$i] = $row;
 		}
 		$response['content']=array('details'=>$array_count);

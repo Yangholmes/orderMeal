@@ -79,11 +79,13 @@ if($result->num_rows === 1){ //常点餐名单中已经存在的人
 				where $table.personnelId = personnel.personnelId 
 				and personnel.name = '$name'";
 	$result = $orderMeal->query($query); //写入数据库
+	echo json_encode($result);
 }
 else if($result->num_rows === 0){ //常点餐名单中还未有记录的人
 	$query =	"insert into $table(personnelId, frequency, $meal)
 				values ((select personnelId from personnel where personnel.name = '$name'), 1, 1)";
 	$result = $orderMeal->query($query);
+	echo json_encode($result);
 }
 
 echo $success;

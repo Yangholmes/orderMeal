@@ -25,4 +25,15 @@ function simpleXmlRead( $data, $isUrl = false ){
 	}
 }
 
-// echo xmlFileRead()->usrConfig->usrname;
+/**
+ * 其他编码转换成utf8
+ * @param $array: data being convert
+ * @param $charset: current encoding
+ */
+function arryConvertEncoding($array, $charset){
+	$chartype = ($charset == 'utf8') ? 1 : 0; //if $array encoding is utf8, do not convert
+	while(list($i,$element) = each($array)){
+		$array[$i] = $chartype ? $array[$i] : iconv( $charset,"utf-8", $array[$i] );
+	}
+	return $array;
+}
