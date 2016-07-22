@@ -10,12 +10,7 @@
 
 	<body>
 		<header>
-			<nav>
-				<ul>
-					<li><a href="terminal/">调试台</a></li>
-					<li><a href="personnel-manage">人员管理</a></li>
-				</ul>
-			</nav>
+			<!-- <h1 id="manage-title">配餐器</h1> -->
 		</header>
 		
 		
@@ -29,7 +24,12 @@
 					</div>
 					<input type="file" id="choose-file" name="menu" accept="image/png,image/jpg" />
 					<textarea placeholder="备注" name="remarks"></textarea>
-					<input type="submit" id="submit-menu" value="开始接受订餐" />
+					
+					<div class="input-submit" id="">
+						<label for="submit-menu">开始接受订餐</label>
+						<input type="submit" id="submit-menu" value="开始接受订餐" />
+					</div>
+					
 				</form>
 			</div>
 			
@@ -59,7 +59,7 @@
 				</table>
 
 				<input type="button" id="mostused-button" value="让我来看看，谁还没点餐" />
-				<table id="mostused" class="count">
+				<table id="details" class="count">
 				</table>
 			</div>
 		</main>

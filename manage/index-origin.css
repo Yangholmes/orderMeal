@@ -1,0 +1,131 @@
+@CHARSET "UTF-8";
+
+html{
+	width: 100%;
+}
+body{
+	width: 95%; height: 100%;
+	margin: 0 auto;
+	font-family: "Microsoft YaHei", 微软雅黑, sans-serif;
+	font-size: 100%;
+}
+p,h1,h2,h3,h4,h5,h6,input,output{
+	padding: 0; margin: 0;
+	font-family: "Microsoft YaHei", 微软雅黑, sans-serif;
+}
+
+main{
+	margin: 3em .5em;
+	/* width: 100%; */
+}
+
+.gallery{
+	font-size: 1.5em;
+	width: 100%;
+}
+.gallery *{
+	margin: 1em 0;
+}
+.gallery div#menu-preview-touch{
+	margin: 0;
+}
+.gallery .mask{
+	background-color: rgba(0,0,0,0);
+	position: absolute;
+}
+.gallery .message{
+	color: rgba(220, 220, 220, 0);
+	position: absolute;
+	/* visibility: hidden; */
+	text-align: center;
+}
+.gallery img,
+.gallery form{
+	width:100%;
+}
+.gallery input,
+.gallery textarea{
+	width: 100%;
+}
+.gallery textarea{
+	height: 4em;
+}
+.gallery input[type="file"]{
+	position: absolute;
+	width: 0;
+	visibility: hidden;
+}
+.gallery input[type="submit"]{
+	height: 3em;
+	border: none;
+	border-radius: .5em;
+	background-color: rgb(0, 200, 50);
+}
+.gallery input[type="submit"]:hover{
+	background-color: rgb(0, 210, 55);
+}
+.gallery input[type="submit"]:active{
+	background-color: rgb(0, 180, 40);
+}
+.gallery::after{
+	content: '';
+	display: block;
+	border-bottom: solid 1px rgb(150,150,150);
+	margin: 1em 0;
+}
+
+.order{
+	width: 100%;
+}
+.order *{
+	margin: 1em 0;
+}
+.order input[type="button"]{
+	width: 100%;
+	height: 3em;
+	border: none;
+	border-radius: .5em;
+	background-color: rgb(0, 200, 50);
+}
+.order input[type="button"]:hover{
+	background-color: rgb(0, 210, 55);
+}
+.order input[type="button"]:active{
+	background-color: rgb(0, 180, 40);
+}
+.order table{
+	width: 100%;
+	border-collapse: collapse;
+	vertical-align: center;
+	text-align: center;
+}
+.order table caption{
+	margin: 0 0 1em 0;
+}
+.order table, th, td
+{
+	border: 1px solid black;
+}
+
+@media only screen and (min-width: 960px){
+	main{
+		max-width: 800px;
+		margin: 3em auto;
+	}
+}
+
+#menu-preview-touch{
+	cursor: pointer;
+}
+#menu-preview-touch .mask{
+	transition: background-color .5s;
+}
+#menu-preview-touch:hover .mask{
+	background-color: rgba(0,0,0,.5);
+}
+#menu-preview-touch .message{
+	transition: color .5s;
+}
+#menu-preview-touch:hover .message{
+	color: rgba(230, 230, 230, 1);
+}
