@@ -107,3 +107,29 @@ table,th,td
 th,td{
 	border-bottom: solid 1px rgba(0,0,0,.1);
 }
+
+
+
+/**
+ * Styling Scrollbars
+ * for webkit kernel only
+ */
+html::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    visibility: hidden;
+}
+html::-webkit-scrollbar-track {
+    background-color: #E2E2E2;
+    border-radius: 10px;
+}
+html::-webkit-scrollbar-corner {
+    
+}
+html::-webkit-scrollbar-thumb{
+    background-color: #717171;
+    border-radius: 10px;
+}
+html::-webkit-scrollbar-button {
+
+}

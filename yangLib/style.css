@@ -1,0 +1,57 @@
+.yangSelect {
+    width: 11em;
+    height: 1.5em;
+}
+
+.yangSelectInput *{
+    height: 1.5em;
+}
+.yangSelectText{
+	width: 8.5em;
+	border: solid 1px gray;
+	display: inline-block;
+}
+.yangSelectTextInput{
+	width: 100%;
+	border: none;
+}
+.yangSelectButton {
+    width: 1.5em; height: 1.5em;
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    border: solid 1px #00FF4E;
+}
+.yangSelectButton input[type="button"] {
+    visibility: hidden;
+}
+
+label {
+    cursor: pointer;
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+}
+
+label:active {
+    background-color: gray;
+}
+
+.yangSelectOption {
+    border: solid 2px #0014FF;
+    width: 10em;
+}
+.yangSelectOption ul{
+	list-style: none;
+	padding: 0; margin: 0;
+}
+.yangSelectOption li:hover{
+	background-color: gray;
+	cursor: pointer;
+}
+
+select {
+    /* visibility: hidden;*/
+    margin: 5em 0;
+}
