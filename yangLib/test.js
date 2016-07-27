@@ -78,4 +78,6 @@ function pick(e){
 	optionHTML += '</ul>';
 	option.innerHTML = optionHTML;
 	optionHTML = '<ul>';
+
+	stillIn = false;
 }
