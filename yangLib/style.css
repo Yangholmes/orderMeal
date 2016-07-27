@@ -14,6 +14,8 @@
 .yangSelectTextInput{
 	width: 100%;
 	border: none;
+	font-size: 1em;
+	padding: 0;
 }
 .yangSelectButton {
     width: 1.5em; height: 1.5em;
@@ -41,10 +43,12 @@ label:active {
 .yangSelectOption {
     border: solid 2px #0014FF;
     width: 10em;
+    position: absolute;
 }
 .yangSelectOption ul{
 	list-style: none;
 	padding: 0; margin: 0;
+	background-color: white;
 }
 .yangSelectOption li:hover{
 	background-color: gray;
@@ -54,4 +58,27 @@ label:active {
 select {
     /* visibility: hidden;*/
     margin: 5em 0;
+}
+
+
+/**
+ * MASK
+ */
+.mask{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(60, 60, 60, .7);
+    /* position: absolute; */
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 9999;
+}
+.inner-mask{
+    margin: auto;
+    width: 30%;
+    height: 30%;
+    border: solid 2px white;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    overflow: auto;
 }

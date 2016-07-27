@@ -32,7 +32,7 @@ option.innerHTML = optionHTML;*/
 input.addEventListener('focusin', search, false); //focuns on the control
 // mySelect.addEventListener('click', search, false);
 input.addEventListener('blur', getOut, false);  //blur
-input.addEventListener('keyup', search, false);
+
 
 function search(e){
 	var inputText = e.target.value;
@@ -78,6 +78,33 @@ function pick(e){
 	optionHTML += '</ul>';
 	option.innerHTML = optionHTML;
 	optionHTML = '<ul>';
+<<<<<<< HEAD
 
 	stillIn = false;
+=======
+}
+
+
+
+/**
+ * MASK
+ */
+var body = document.getElementsByTagName('body')[0];
+
+var mask = document.createElement('div');
+mask.className = "mask";
+body.insertBefore(mask,body.firstChild);
+
+var innerMask = '<div class="inner-mask"></div>';
+
+mask.innerHTML = innerMask;
+
+mask.addEventListener('click', destroy, false);
+
+function destroy(e){
+	var target = e.target;
+	
+	if(target.className == 'mask')
+		target.remove();
+>>>>>>> refs/remotes/origin/master
 }
