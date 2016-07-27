@@ -78,10 +78,8 @@ function pick(e){
 	optionHTML += '</ul>';
 	option.innerHTML = optionHTML;
 	optionHTML = '<ul>';
-<<<<<<< HEAD
 
 	stillIn = false;
-=======
 }
 
 
@@ -106,5 +104,4 @@ function destroy(e){
 	
 	if(target.className == 'mask')
 		target.remove();
->>>>>>> refs/remotes/origin/master
 }
