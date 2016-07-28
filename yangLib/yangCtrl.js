@@ -5,6 +5,7 @@ function yangImgInput( name, message, img ){
 }
 
 yangImgInput.prototype = {
+	constructor: yangImgInput,
 	ctrlName: 'yang-img-input',
 	id: '{yang-img-input-id}',
 	selfDom: '',
@@ -187,4 +188,4 @@ yangImgInput.prototype = {
 		this.render();
 		e.parentNode.insertBefore(this.self, e.nextElementSibling());
 	},
-}
+};

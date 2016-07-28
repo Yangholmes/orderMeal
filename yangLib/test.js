@@ -2,8 +2,8 @@
  * 
  */
 
-/*var img = new yangImgInput( 'test', '单击这里选择图片', '');
-img.insert(document.getElementsByClassName('test')[0]);*/
+var img = new yangImgInput( 'test', '单击这里选择图片', '');
+img.insert(document.getElementsByClassName('test')[0]);
 
 var mySelect = document.getElementsByClassName('yangSelect')[0],
 	input = mySelect.getElementsByClassName('yangSelectTextInput')[0], //IE10 don't support~
@@ -30,6 +30,7 @@ optionHTML += '</ul>';
 option.innerHTML = optionHTML;*/
 
 input.addEventListener('focusin', search, false); //focuns on the control
+input.addEventListener('keyup', search, false);
 // mySelect.addEventListener('click', search, false);
 input.addEventListener('blur', getOut, false);  //blur
 
@@ -50,7 +51,8 @@ function search(e){
 	var optionLi = option.getElementsByTagName('li');
 	for(var i=0;i<optionLi.length;i++){
 		optionLi[i].addEventListener('click', pick, false);
-		optionLi[i].addEventListener('mouseover', keep, false);
+		optionLi[i].addEventListener('mouseenter', keep, false);
+		optionLi[i].addEventListener('mouseout', release, false);
 	}
 }
 
@@ -64,7 +66,10 @@ function getOut(e){
 }
 
 function keep(e){
-	stillIn =true;
+	stillIn = true;
+}
+function release(e){
+	stillIn = false;
 }
 
 function pick(e){
