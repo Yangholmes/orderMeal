@@ -12,21 +12,26 @@ yangSelectInput.prototype = {
 
 	fontSize: '1.5em',
 
+	_stillIn: false, //whether the cursor is still in this ctrl
 	rendered: false,
 	self: {},
 
-	html: 	'<div id="{yang-select-id}-layout" class="yang-select-layout">'
-				'<div id="{yang-select-id}" class="yang-select">' +
+	value: [], //the value of options
+	textContent: [] //display values in <li>
+
+	html: 	'<div id="{yang-select-id}" class="yang-select">'
+				'<div id="{yang-select-id}-layout" class="yang-select-layout">' +
 					'<div id="{yang-select-id}-text-border" class="yang-select-text-border">' +
 						'<input type="text" id="{yang-select-id}-text" class="yang-select-text">' +
 					'</div>' +
 					'<div id="{yang-select-id}-button class="yang-select-button">' +
 						'<label for="{yang-select-id}-button-bind">▼</label>' +
-						'<input type="button" id="{yang-select-id}-button-bind">' +
+						'<input type="button" id="{yang-select-id}-button-bind" class="yang-select-button-bind">' +
 					'</div>' +
 				'</div>' +
 				'<div id="{yang-select-id}-option class="yang-select-option">' +
 					'<ul>' +
+					'<li></li>' + 
 					'</ul>' +
 				'</div>' +
 				'<select class="yang-select-select" name="{yang-select-name}></select>' +
@@ -103,7 +108,35 @@ yangSelectInput.prototype = {
 		document.getElementsByTagName('head')[0].appendChild(styleElt);
 	},
 	/**
-	 * 
+	 * target.addEventListener(type, listener[, options]);
 	 */
-	 _regEvents: function()
+	 _regEvents: function(){
+	 	var textInput = this.self.getElementsByClassName('yang-select-text')[0],
+	 		button = this.self.getElementsByClassName('yang-select-button-bind')[0],
+	 		option = this.self.getElementsByClassName('yang-select-option')[0],
+	 		optionUl = option.getElementsByTagName('ul'),
+	 		optionLi = option.getElementsByTagName('li'),
+	 		select = this.self.getElementsByTagName('select')[0];
+
+	 	textInput.addEventListener('focusin', search.call(this), false); //focuns on the control
+	 	textInput.addEventListener('blur', getOut, false); //blur
+	 	textInput.addEventListener('keyup', search, false);
+
+	 	button.addEventListener('click', , false);
+
+	 	option.addEventListener('mouseenter', keep, false);
+		option.addEventListener('mouseout', release, false);
+
+		for(var i=0;i<optionLi.length;i++){
+			optionLi[i].addEventListener('click', pick, false);
+		}
+	 },
+	 /**
+	  * 
+	  */
+	 listener: {
+	 	search: function(){
+
+	 	}
+	 },
 }

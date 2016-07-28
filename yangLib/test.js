@@ -29,7 +29,7 @@ optionHTML += '</ul>';
 
 option.innerHTML = optionHTML;*/
 
-input.addEventListener('focusin', search, false); //focuns on the control
+input.addEventListener('focusin', function(e){return search.call(input, e)}, false); //focuns on the control
 input.addEventListener('keyup', search, false);
 // mySelect.addEventListener('click', search, false);
 input.addEventListener('blur', getOut, false);  //blur
@@ -37,8 +37,9 @@ input.addEventListener('blur', getOut, false);  //blur
 
 function search(e){
 	var inputText = e.target.value;
+	// var inputText = e.value;
 	// if(!inputText) return false;
-	for(var i=0;i<optionArray.length;i++){
+	for(var  i=0;i<optionArray.length;i++){
 		if( optionArray[i].indexOf(inputText) != -1){
 			// console.log(i);
 			optionHTML += '<li>' + oOption[i].text + '</li>';
