@@ -41,7 +41,7 @@ label:active {
 }
 
 .yangSelectOption {
-    border: solid 2px #0014FF;
+    /* border: solid 2px #0014FF; */
     width: 10em;
     position: absolute;
 }

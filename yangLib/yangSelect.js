@@ -1,8 +1,9 @@
 function yangSelectInput( name, options  ){
 	this.name = name;
-	this.message = message;
+	this.value = options.value;
+	this.textContent = options.textContent;
 
-	this.render();
+	this._render();
 }
 yangSelectInput.prototype = {
 	constructor: yangSelectInput,
@@ -13,28 +14,27 @@ yangSelectInput.prototype = {
 	fontSize: '1.5em',
 
 	_stillIn: false, //whether the cursor is still in this ctrl
-	rendered: false,
-	self: {},
+	rendered: false, //whether this ctrl is rendered~
+	self: {}, //represent itself
 
-	value: [], //the value of options
-	textContent: [] //display values in <li>
+	value: [], //the value of options. value 属性规定在表单被提交时被发送到服务器的值
+	textContent: [], //display values in <li>. textContent 属性用来显示
 
-	html: 	'<div id="{yang-select-id}" class="yang-select">'
+	html: 	'<div id="{yang-select-id}" class="yang-select">' + 
 				'<div id="{yang-select-id}-layout" class="yang-select-layout">' +
 					'<div id="{yang-select-id}-text-border" class="yang-select-text-border">' +
 						'<input type="text" id="{yang-select-id}-text" class="yang-select-text">' +
 					'</div>' +
-					'<div id="{yang-select-id}-button class="yang-select-button">' +
+					'<div id="{yang-select-id}-button" class="yang-select-button">' +
 						'<label for="{yang-select-id}-button-bind">▼</label>' +
 						'<input type="button" id="{yang-select-id}-button-bind" class="yang-select-button-bind">' +
 					'</div>' +
 				'</div>' +
-				'<div id="{yang-select-id}-option class="yang-select-option">' +
+				'<div id="{yang-select-id}-option" class="yang-select-option">' +
 					'<ul>' +
-					'<li></li>' + 
 					'</ul>' +
 				'</div>' +
-				'<select class="yang-select-select" name="{yang-select-name}></select>' +
+				'<select id="{yang-select-id}-select" class="yang-select-select" name="{yang-select-name}"></select>' +
 			'</div>', 
 
 	style: {
@@ -46,10 +46,10 @@ yangSelectInput.prototype = {
 							'yang-select-button input[type="button"]': 'visibility: hidden; font-family: "Microsoft YaHei"',
 							'yang-select-button label': 'cursor: pointer; display: inline-block; width: 1.5em; height: 1.5em; line-height: 1.5em;',
 							'yang-select-button label:hover': 'background-color: gray;',
-					'yang-select-option': 'border: solid 2px #0014FF; width: 10em; position: absolute; background-color: white;',
+					'yang-select-option': 'width: 10em; position: absolute; background-color: white;',
 						'yang-select-option ul': 'list-style: none; padding: 0; margin: 0;',
 						'yang-select-option li:hover': 'background-color: gray; cursor: pointer;',
-					'yang-select-layout select': 'visibility: hidden; margin: 5em 0; position: absolute;',
+					'yang-select-select': 'visibility: hidden; margin: 5em 0; position: absolute;',
 			},
 
 	/**
@@ -110,33 +110,99 @@ yangSelectInput.prototype = {
 	/**
 	 * target.addEventListener(type, listener[, options]);
 	 */
-	 _regEvents: function(){
-	 	var textInput = this.self.getElementsByClassName('yang-select-text')[0],
-	 		button = this.self.getElementsByClassName('yang-select-button-bind')[0],
-	 		option = this.self.getElementsByClassName('yang-select-option')[0],
-	 		optionUl = option.getElementsByTagName('ul'),
-	 		optionLi = option.getElementsByTagName('li'),
-	 		select = this.self.getElementsByTagName('select')[0];
+	_regEvents: function(){
+		var textInput = this.self.getElementsByClassName('yang-select-text')[0],
+			button = this.self.getElementsByClassName('yang-select-button-bind')[0],
+			option = this.self.getElementsByClassName('yang-select-option')[0],
+			optionUl = option.getElementsByTagName('ul')[0],
+			// optionUl = this.self.getElementsByTagName('ul')[0],
+			optionLi = option.getElementsByTagName('li'), // The returned list is live, meaning that it updates itself with the DOM tree automatically. 
+			// optionLi = this.self.getElementsByTagName('li'),
+			select = this.self.getElementsByTagName('select')[0],
+			optionHTML = '1';
 
-	 	textInput.addEventListener('focusin', search.call(this), false); //focuns on the control
-	 	textInput.addEventListener('blur', getOut, false); //blur
-	 	textInput.addEventListener('keyup', search, false);
+		textInput.addEventListener('focus', search, false); //focuns on the control
+		textInput.addEventListener('blur', leave, false); //blur
+		textInput.addEventListener('keyup', search, false);
 
-	 	button.addEventListener('click', , false);
+		button.addEventListener('click', search, false);
 
-	 	option.addEventListener('mouseenter', keep, false);
+		option.addEventListener('mouseenter', keep, false);
 		option.addEventListener('mouseout', release, false);
 
-		for(var i=0;i<optionLi.length;i++){
-			optionLi[i].addEventListener('click', pick, false);
-		}
-	 },
-	 /**
-	  * 
-	  */
-	 listener: {
-	 	search: function(){
+		function search(e){
+			var inputText = e.target.value;
+			for(var  i=0;i<this.textContent.length;i++){
+				if( this.textContent[i].indexOf(inputText) != -1){
+					optionHTML += 	'<li value="' + this.value[i] + '">' +
+									this.textContent[i] + '</li>';
 
-	 	}
-	 },
+					select.option[i].value = this.value[i];
+					select.option[i].text = this.textContent[i];
+				}
+			}
+
+			console.log(optionHTML);
+
+			optionUl.innerHTML = optionHTML;
+			option.style.border = 'solid 2px #0014FF';
+			for(var i=0;i<optionLi.length;i++)
+				optionLi[i].addEventListener('click', pick, false);
+		}
+
+		function leave(e){
+			if(!stillIn){
+				optionUl.innerHTML = null;	
+				option.style.border = '';
+			}
+		}
+
+		function keep(e){
+			stillIn = true;
+		}
+		function release(e){
+			stillIn = false;
+		}
+
+		function pick(e){
+			var liTextContent = e.target.textContent, //textContent of <li>
+				index = this.textContent.indexOf(liTextContent);
+
+			select.selectedIndex = index;
+			input.value = liTextContent;
+
+			optionUl.innerHTML = null;
+			stillIn = false;
+		}
+	},
+	/**
+	 * 
+	 */
+	_render: function(){
+		if(!this.rendered){
+			this._createHTML();
+			this._createStyle();
+			this._regEvents();
+			this.rendered = true;
+		}
+		else{
+
+		}
+		return this;
+	},
+
+	 /**
+	  * value 属性规定在表单被提交时被发送到服务器的值
+	  * textContent 属性用来显示
+	  */
+	setOption: function(value, textContent){
+		this.value = value;
+		this.textContent = textContent;
+	},
+	getOption: function(){
+		return {
+			value: this.value,
+			textContent: this.textContent,
+		};
+	}
 }
