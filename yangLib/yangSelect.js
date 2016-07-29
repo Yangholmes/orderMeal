@@ -1,4 +1,4 @@
-function yangSelectInput( name, options  ){
+function yangSelectInput( name, options ){
 	this.name = name;
 	this.value = options.value;
 	this.textContent = options.textContent;
@@ -39,17 +39,17 @@ yangSelectInput.prototype = {
 
 	style: {
 				'yang-select-layout': 'width: 11em; height: 1.5em; font-family: "Microsoft YaHei"',
-					'yang-select *': 'height: 1.5em; font-family: "Microsoft YaHei"',
-						'yang-select-text-border': 'width: 8.5em; border: solid 1px gray; display: inline-block;',
+					'yang-select': 'height: 1.5em; font-family: "Microsoft YaHei"',
+						'yang-select-text-border': 'width: 8.5em; height: 1.5em; border: solid 1px gray; display: inline-block;',
 							'yang-select-text': '	width: 100%; border: none; font-size: 1em; padding: 0;',
 						'yang-select-button':  'width: 1.5em; height: 1.5em; display: inline-block; position: absolute; text-align: center; border: solid 1px gray;',
 							'yang-select-button input[type="button"]': 'visibility: hidden; font-family: "Microsoft YaHei"',
 							'yang-select-button label': 'cursor: pointer; display: inline-block; width: 1.5em; height: 1.5em; line-height: 1.5em;',
 							'yang-select-button label:hover': 'background-color: gray;',
-					'yang-select-option': 'width: 10em; position: absolute; background-color: white;',
+					'yang-select-option': 'width: 10em; height: auto; position: absolute; background-color: white;',
 						'yang-select-option ul': 'list-style: none; padding: 0; margin: 0;',
-						'yang-select-option li:hover': 'background-color: gray; cursor: pointer;',
-					'yang-select-select': 'visibility: hidden; margin: 5em 0; position: absolute;',
+						'yang-select-option li:hover': 'width: 10em; background-color: gray; cursor: pointer;',
+					'yang-select-select': 'visibility: hidden; margin: 0; position: absolute;',
 			},
 
 	/**
@@ -111,15 +111,15 @@ yangSelectInput.prototype = {
 	 * target.addEventListener(type, listener[, options]);
 	 */
 	_regEvents: function(){
-		var textInput = this.self.getElementsByClassName('yang-select-text')[0],
+		var that = this,
+			textInput = this.self.getElementsByClassName('yang-select-text')[0],
 			button = this.self.getElementsByClassName('yang-select-button-bind')[0],
 			option = this.self.getElementsByClassName('yang-select-option')[0],
 			optionUl = option.getElementsByTagName('ul')[0],
 			// optionUl = this.self.getElementsByTagName('ul')[0],
 			optionLi = option.getElementsByTagName('li'), // The returned list is live, meaning that it updates itself with the DOM tree automatically. 
 			// optionLi = this.self.getElementsByTagName('li'),
-			select = this.self.getElementsByTagName('select')[0],
-			optionHTML = '1';
+			select = this.self.getElementsByTagName('select')[0];
 
 		textInput.addEventListener('focus', search, false); //focuns on the control
 		textInput.addEventListener('blur', leave, false); //blur
@@ -127,27 +127,27 @@ yangSelectInput.prototype = {
 
 		button.addEventListener('click', search, false);
 
-		option.addEventListener('mouseenter', keep, false);
-		option.addEventListener('mouseout', release, false);
+		// option.addEventListener('mouseenter', keep, false);
+		// option.addEventListener('mouseout', release, false);
 
 		function search(e){
-			var inputText = e.target.value;
-			for(var  i=0;i<this.textContent.length;i++){
-				if( this.textContent[i].indexOf(inputText) != -1){
-					optionHTML += 	'<li value="' + this.value[i] + '">' +
-									this.textContent[i] + '</li>';
-
-					select.option[i].value = this.value[i];
-					select.option[i].text = this.textContent[i];
+			var inputText = e.target.value,
+				optionHTML = '',
+				liHTML = '';
+			for(var  i=0;i<that.textContent.length;i++){
+				if( that.textContent[i].indexOf(inputText) != -1){
+					liHTML += 	'<li value="' + that.value[i] + '">' +
+									that.textContent[i] + '</li>';
 				}
 			}
 
-			console.log(optionHTML);
-
-			optionUl.innerHTML = optionHTML;
-			option.style.border = 'solid 2px #0014FF';
-			for(var i=0;i<optionLi.length;i++)
+			optionUl.innerHTML = liHTML;
+			option.style.border = 'solid 2px gray';
+			for(var i=0;i<optionLi.length;i++){
 				optionLi[i].addEventListener('click', pick, false);
+				optionLi[i].addEventListener('mouseenter', keep, false);
+				optionLi[i].addEventListener('mouseout', release, false);
+			}
 		}
 
 		function leave(e){
@@ -166,13 +166,14 @@ yangSelectInput.prototype = {
 
 		function pick(e){
 			var liTextContent = e.target.textContent, //textContent of <li>
-				index = this.textContent.indexOf(liTextContent);
+				index = that.textContent.indexOf(liTextContent);
 
 			select.selectedIndex = index;
-			input.value = liTextContent;
+			textInput.value = liTextContent;
 
 			optionUl.innerHTML = null;
 			stillIn = false;
+			option.style.border = '';
 		}
 	},
 	/**
@@ -183,6 +184,7 @@ yangSelectInput.prototype = {
 			this._createHTML();
 			this._createStyle();
 			this._regEvents();
+			this.setOption({value: this.value, textContent: this.textContent});
 			this.rendered = true;
 		}
 		else{
@@ -195,9 +197,17 @@ yangSelectInput.prototype = {
 	  * value 属性规定在表单被提交时被发送到服务器的值
 	  * textContent 属性用来显示
 	  */
-	setOption: function(value, textContent){
-		this.value = value;
-		this.textContent = textContent;
+	setOption: function(options){
+		var select = this.self.getElementsByTagName('select')[0],
+			optionHTML = '';
+		this.value = options.value;
+		this.textContent = options.textContent;
+
+		for(var  i=0;i<this.textContent.length;i++){
+			optionHTML += '<option value="' + this.value[i] + '">' +
+							this.textContent[i] + '</option>';
+		}
+		select.innerHTML = optionHTML;
 	},
 	getOption: function(){
 		return {
