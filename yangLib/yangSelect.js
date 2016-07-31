@@ -133,7 +133,7 @@ yangSelectInput.prototype = {
 		function search(e){
 			var inputText = e.target.value,
 				optionHTML = '',
-				liHTML = '';
+				liHTML = ''; 
 			for(var  i=0;i<that.textContent.length;i++){
 				if( that.textContent[i].indexOf(inputText) != -1){
 					liHTML += 	'<li value="' + that.value[i] + '">' +
@@ -214,5 +214,18 @@ yangSelectInput.prototype = {
 			value: this.value,
 			textContent: this.textContent,
 		};
-	}
+	},
+
+	/**
+	 * 
+	 */
+	getSelectedIndex: function(){
+		var select = this.self.getElementsByTagName('select')[0];
+		return select.selectedIndex;
+	},
+	setSelectedIndex: function(index){
+		var select = this.self.getElementsByTagName('select')[0];
+		select.selectedIndex = index;
+		return this;
+	},
 }

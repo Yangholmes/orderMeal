@@ -5,8 +5,8 @@
 // var img = new yangImgInput( 'test', '单击这里选择图片', '');
 // img.insert(document.getElementsByClassName('test')[0]);
 
-var options={	value:['一','二','三', '1', '2', '3'],
-				textContent:['一','二','三', '1', '2', '3']};
+var options={	value:['1一','1二','1三', '1111', '11112', '11113'],
+				textContent:['1一','1二','1三', '1111', '1112', '11113']};
 var select = new yangSelectInput( 'mySelect', options );
 document.getElementsByTagName('body')[0].appendChild(select.self);
 
