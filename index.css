@@ -1,113 +1,150 @@
 @CHARSET "UTF-8";
 
 html{
-	width: 100%; height: 100%;
+	width: 960px; height: auto; min-height: 100%; margin: 0 auto;
+	box-shadow: 2px 2px 50px 0px rgba(0, 0, 0, .75);
 }
 body{
-	width: 95%; height: 100%;
+	width: 800px; height: auto;
 	margin: 0 auto;
-	font-family: "Microsoft YaHei", 微软雅黑, sans-serif;
+	font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
 	font-size: 100%;
-	background: url('illustration.png');
-	background-repeat: no-repeat; 
-	background-size: 150px;
-	background-position: center bottom;
 }
 p,h1,h2,h3,h4,h5,h6,input,output{
 	padding: 0; margin: 0;
-	font-family: "Microsoft YaHei", 微软雅黑, sans-serif;
+	font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+	font-size: 1em;
 }
 
-main{
-	padding: 3.5rem .5rem;
+header{
+	height: 150px;
+	width: 100%;
+	font-size: 3.75em;
+	border-bottom: solid 2px gray;
+	line-height: 150px;
 }
 
-.gallery{
-	width: 100%;
+.district{
+	margin-top: 50px;
 }
-.gallery *{
-	margin: .5em 0;
+.district *{
+    margin-bottom: 25px;
 }
-.gallery img{
-	width:100%;
+.ancher{
+	font-size: 1.875em;
+	width: 3em; height: 1.5em;
+	line-height: 1.5em;
+	text-align: center;
+	color: white;
+	background-color: rgb(192, 192, 192);
 }
-.gallery output{
-	width: 100%;
-	border: solid 1px red;
+#name,
+#meal,
+.yangButton{
+	width: 49%;
+	display: inline-flex;
 }
-.gallery::after{
-	content: '';
-	display: block;
-	border-bottom: solid 1px rgb(150,150,150);
-	margin: 1em 0;
+button{
+    visibility: hidden;
+    position: absolute;
 }
-
-.selector{
-	font-size: 1.5em;
-	width: 100%;
+.yangButton{
+	font-size: 1em;
+	text-align: center;
+	/*width: 49%;*/ height: 2em;
+	line-height: 2em;
+	background-color: rgb(200, 22, 35); transition: background-color .5s;
+	border: solid 1px rgba(175, 21, 32, 1);
+	color: white;
 }
-.selector form *{
-	height: 2em;
-	margin: 1em 0;
-}
-.selector select{
-	width: 100%;
-	display: block;
-	background-color: rgba(0, 158, 142, 0.7);
-	border-style: none;
-	border-radius: .4em;
-	color: #fff;
-}
-.selector a#random-meal{
-	text-decoration: underline;
-	font-size: .5em;
-	color: rgb(255, 0, 0);
+.yangButton:hover{
 	cursor: pointer;
-	margin: 0;
+	/* background-color: rgb(175, 21, 32); */
+	background-color: rgba(175, 21, 32, 0); transition: background-color .5s;
+	color: rgba(175, 21, 32, 1);
+
 }
-.selector input{
+.yangButton:active{
+	cursor: pointer;
+	background-color: rgba(175, 21, 32, .7); transition: background-color .5s;
+	color: white;
+}
+.yangButton:hover label{
+	cursor: pointer;
+}
+label{
 	width: 100%;
-	display: block;
+	height: 100%;
+	display: inline-block; /* label是inline元素 宽高都是无法设置的 应该设置为非inline */
 }
-.selector input[type="submit"]{
-	height: 3em;
-	border: none;
-	border-radius: .5em;
-	background-color: rgba(52,207,190,0.8);
-	color: #fff;
+#menu{
+	width: 100%;
 }
-.selector input[type="submit"]:hover{
-	background-color: rgba(93, 207, 195, 0.8);
+#menu-remark{
+	width: 100%;
+	margin-bottom: 0;
 }
-.selector input[type="submit"]:active{
-	background-color: rgba(52,207,190,0.8);;
+
+#booked,
+#unbook{
+	width: 50%;
 }
-.selector div#caution {
-	color: red;
-	font-size: .5em;
-	/*font-weight: bold;*/
+#booked{
+	float: left;
+}
+#unbook{
+	float: right;
+}
+
+
+
+table{
+	width: 90%;
+	border-collapse: collapse;
+	vertical-align: center;
+	text-align: center;
+}
+table,th,td
+{
+	border:none;
+	font-size: 1em;
+	line-height: 2em;
+}
+th,td{
+	border-bottom: solid 1px rgba(0,0,0,.1);
+}
+tr:hover{
+	background-color: rgba(200, 200, 200, .3);
+	transition: background-color .5s;
 }
 
 footer{
-	width: 100%;
-	position: relative;
-	left: 0; bottom: 0;
-}
-footer .copyrightInformation{
-	margin: 1em auto;
-	font-size: .75em;
-	text-align: center;
+	clear: both;
+	padding: 2em 0;
 }
 
-@media only screen and (min-width: 960px){
-	main{
-		width: 800px;
-		margin: 0em auto;
-	}
-	body{
-		background: url('illustration-rotate.png');
-		background-repeat: no-repeat; 
-		background-size: 300px;
-		background-position: right center;
-	}
+
+
+/**
+ * Styling Scrollbars
+ * for webkit kernel only
+ */
+html::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    visibility: hidden;
+}
+html::-webkit-scrollbar-track {
+    background-color: #E2E2E2;
+    border-radius: 10px;
+}
+html::-webkit-scrollbar-corner {
+    
+}
+html::-webkit-scrollbar-thumb{
+    background-color: #717171;
+    border-radius: 10px;
+}
+html::-webkit-scrollbar-button {
+
 }

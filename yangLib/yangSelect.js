@@ -224,8 +224,24 @@ yangSelectInput.prototype = {
 		return select.selectedIndex;
 	},
 	setSelectedIndex: function(index){
-		var select = this.self.getElementsByTagName('select')[0];
+		var select = this.self.getElementsByTagName('select')[0],
+			textInput = this.self.getElementsByClassName('yang-select-text')[0];
 		select.selectedIndex = index;
+		textInput.value = select.options[index].textContent;
 		return this;
+	},
+
+	/**
+	 * methos that be used to insert self into document
+	 */
+	insert: function(e){
+		e.innerHTML = ''; //remove all child elements(nodes)
+		e.appendChild(this.self); //append self into e
+	},
+	insertBefore: function(e){
+		e.parentNode.insertBefore(this.self, e);
+	},
+	insertAfter: function(e){
+		e.parentNode.insertBefore(this.self, e.nextElementSibling());
 	},
 }

@@ -8,7 +8,8 @@
 var options={	value:['1一','1二','1三', '1111', '11112', '11113'],
 				textContent:['1一','1二','1三', '1111', '1112', '11113']};
 var select = new yangSelectInput( 'mySelect', options );
-document.getElementsByTagName('body')[0].appendChild(select.self);
+select.insert(document.getElementsByTagName('body')[0]);
+// document.getElementsByTagName('body')[0].appendChild(select.self);
 
 
 // var mySelect = document.getElementsByClassName('yangSelect')[0],

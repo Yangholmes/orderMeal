@@ -9,45 +9,50 @@
 	</head>
 
 	<body>
-		<header></header>
-		<!-- side bar left start -->
-		<div class="sidebar" id="left-main"></div>
-		<!-- side bar left end -->
-		<!-- main start -->
+		<!-- header start -->
+		<header>
+			<h1 id="order-title">点餐器</h1>
+			<div class="" id="funny-pic"><img src=""></div>
+		</header>
+		<!-- header end -->
+
+		<!-- mian start -->
 		<main>
-			<div class="gallery">
-				<img src="manage/img.png" alt="菜单" />
-				<p>备注：</p>
-				<output id="remarks" name="remarks">备注</output>
+			<!-- daily-menu start -->
+			<div class="district" id="daily-menu">
+				<h2 class="ancher">菜单</h2> <!-- title -->
+				<img src="manage/img.png" alt="菜单"> <!-- menu -->
 			</div>
-			<div class="selector">
+			<!-- daily-menu end -->
+
+			<!-- order start -->
+			<div class="district" id="order">
+				<h2 class="ancher">点餐</h2>
+
 				<form id="order-form" action="orderMeal.php" method="post">
-					<select class="name" id="name" name="name"></select>
-					<!-- <input type="text" name="name" placeholder="请输入姓名"/> -->
-					<select class="meal" name="meal">
-						<option value="A">A</option>
-						<option value="B">B</option>
-						<option value="C">C</option>
-						<option value="D">D</option>
-					</select>
-					<a id="random-meal">纠结病患者福音！点我试试看！</a>
-					<input type="submit" id="submit-order" value="确定此餐" />
+					<div id="selector">
+						<div id="name"></div>
+						<div id="meal"></div>
+					</div>
+					<div id="button">
+						<div class="yangButton">
+							<label for="order-meal">点餐</label>
+							 <button type="submit" id="order-meal" value=""></button>
+						</div>
+						<div class="yangButton">
+							<label for="random-meal">随便点一个</label>
+							<button type="button" id="random-meal" value=""></button>
+						</div>
+					</div>
 				</form>
-				
-				<div id="caution">
-					<ol>
-						<li>请于每日10:10前点餐，逾期请联系管理员。</li>
-						<li>可在截止时间之前，选择自己喜欢的套餐，也可以更换套餐。</li>
-						<li>选择自己的姓名点餐，系统会记住您的称呼。</li>
-						<li>如果发现没有自己的姓名，请联系管理员。</li>
-					</ol>
-				</div>
 			</div>
-		</main>
-		<!-- main end -->
-		<!-- side bar right start -->
-		<div class="sidebar" id="right-main"></div>
-		<!-- side bar right end -->
+			<!-- order end -->
+
+			<div class="district" id="bulletin-board">
+				<h2 class="ancher">公告</h2>
+			</div>
+		
+		<script type="text/javascript" src="yangLib/yangSelect.js"></script>
 		<script type="text/javascript" src="index.js"></script>
 	</body>
 </html>
