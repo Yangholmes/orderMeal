@@ -7,6 +7,7 @@ function init(){
 
 function generateYangCtrl(){
 	var nameOptions = {value: ["null"], textContent: ["no data"]},
+		mealOptions = {value: [], textContent: ["no data"]},
 		nameSelect = new yangSelectInput( 'name', nameOptions ),
 		mealSelect = new yangSelectInput( 'meal', mealOptions );
 
