@@ -6,12 +6,13 @@ function init(){
 }
 
 function generateYangCtrl(){
-	var nameOptions = {value: ["null"], textContent: ["no data"]},
-		mealOptions = {value: [], textContent: ["no data"]},
-		nameSelect = new yangSelectInput( 'name', nameOptions ),
-		mealSelect = new yangSelectInput( 'meal', mealOptions );
-
-	nameSelect.insert(document.getElementById('name'));
+	var nameOptions = {value: ["0"], textContent: ["某某某"]},
+		mealOptions = {value: ['A', 'B', 'C', 'D'], textContent: ['A', 'B', 'C', 'D']};
+		
+	var nameSelect = new yangSelectInput( 'name', nameOptions );
+	nameSelect.width = '93%'; nameSelect.insert(document.getElementById('name'));
+	var mealSelect = new yangSelectInput( 'meal', mealOptions );
+	mealSelect.width = '93%'; mealSelect.insert(document.getElementById('meal'));
 }
 
 

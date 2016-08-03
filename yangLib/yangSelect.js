@@ -20,10 +20,9 @@ yangSelectInput.prototype = {
 	value: [], //the value of options. value 属性规定在表单被提交时被发送到服务器的值
 	textContent: [], //display values in <li>. textContent 属性用来显示
 
-	html: 	'<div id="{yang-select-id}" class="yang-select">' + 
-				'<div id="{yang-select-id}-layout" class="yang-select-layout">' +
+	html: 		'<div id="{yang-select-id}-layout" class="yang-select-layout">' +
 					'<div id="{yang-select-id}-text-border" class="yang-select-text-border">' +
-						'<input type="text" id="{yang-select-id}-text" class="yang-select-text">' +
+						'<input type="text" id="{yang-select-id}-text" class="yang-select-text" placeholder="Enter keywords and search">' +
 					'</div>' +
 					'<div id="{yang-select-id}-button" class="yang-select-button">' +
 						'<label for="{yang-select-id}-button-bind">▼</label>' +
@@ -34,22 +33,21 @@ yangSelectInput.prototype = {
 					'<ul>' +
 					'</ul>' +
 				'</div>' +
-				'<select id="{yang-select-id}-select" class="yang-select-select" name="{yang-select-name}"></select>' +
-			'</div>', 
+				'<select id="{yang-select-id}-select" class="yang-select-select" name="{yang-select-name}"></select>', 
 
 	style: {
-				'yang-select-layout': 'width: 11em; height: 1.5em; font-family: "Microsoft YaHei"',
-					'yang-select': 'height: 1.5em; font-family: "Microsoft YaHei"',
-						'yang-select-text-border': 'width: 8.5em; height: 1.5em; border: solid 1px gray; display: inline-block;',
-							'yang-select-text': '	width: 100%; border: none; font-size: 1em; padding: 0;',
-						'yang-select-button':  'width: 1.5em; height: 1.5em; display: inline-block; position: absolute; text-align: center; border: solid 1px gray;',
-							'yang-select-button input[type="button"]': 'visibility: hidden; font-family: "Microsoft YaHei"',
-							'yang-select-button label': 'cursor: pointer; display: inline-block; width: 1.5em; height: 1.5em; line-height: 1.5em;',
-							'yang-select-button label:hover': 'background-color: gray;',
-					'yang-select-option': 'width: 10em; height: auto; position: absolute; background-color: white;',
-						'yang-select-option ul': 'list-style: none; padding: 0; margin: 0;',
-						'yang-select-option li:hover': 'width: 10em; background-color: gray; cursor: pointer;',
-					'yang-select-select': 'visibility: hidden; margin: 0; position: absolute;',
+				'yang-select': 'width: 200px; height: 1.5em; font-family: "Microsoft YaHei"', 
+					'yang-select-layout': 'width: 100%; height: 1.5em; font-family: "Microsoft YaHei"',
+							'yang-select-text-border': 'width: 99%; height: 1.5em; border: solid 1px gray; display: inline-block;',
+								'yang-select-text': '	width: 100%; border: none; font-size: 1em; padding: 0;',
+							'yang-select-button':  'width: 1.5em; height: 1.5em; display: inline-block; position: absolute; text-align: center; border: solid 1px gray;',
+								'yang-select-button input[type="button"]': 'visibility: hidden; font-family: "Microsoft YaHei"',
+								'yang-select-button label': 'cursor: pointer; display: inline-block; width: 1.5em; height: 1.5em; line-height: 1.5em;',
+								'yang-select-button label:hover': 'background-color: gray;',
+						'yang-select-option': 'width: 100%; height: auto; max-height: 10em; position: relative; background-color: white; overflow-y: auto',
+							'yang-select-option ul': 'list-style: none; padding: 0; margin: 0;',
+							'yang-select-option li:hover': 'width: 100%; background-color: gray; cursor: pointer;',
+						'yang-select-select': 'visibility: hidden; margin: 0; position: absolute;',
 			},
 
 	/**
@@ -83,7 +81,7 @@ yangSelectInput.prototype = {
 		that.html = that._replace(that.html, '{yang-select-name}', that.name); //set name
 		that._instanceId(); //generate an id
 		that.html = that._replace(that.html, '{yang-select-id}', that.id); //set id
-		newSelect.id = this.id; newSelect.className = 'yang-img-input'; //set property id and class
+		newSelect.id = this.id; newSelect.className = 'yang-select'; //set property id and class
 		newSelect.innerHTML = that.html; //insert html into new div
 		that.self = newSelect; //set self object
 	},
@@ -142,7 +140,7 @@ yangSelectInput.prototype = {
 			}
 
 			optionUl.innerHTML = liHTML;
-			option.style.border = 'solid 2px gray';
+			option.style.border = 'solid 1px gray';
 			for(var i=0;i<optionLi.length;i++){
 				optionLi[i].addEventListener('click', pick, false);
 				optionLi[i].addEventListener('mouseenter', keep, false);
@@ -151,17 +149,17 @@ yangSelectInput.prototype = {
 		}
 
 		function leave(e){
-			if(!stillIn){
+			if(!that.stillIn){
 				optionUl.innerHTML = null;	
 				option.style.border = '';
 			}
 		}
 
 		function keep(e){
-			stillIn = true;
+			that.stillIn = true;
 		}
 		function release(e){
-			stillIn = false;
+			that.stillIn = false;
 		}
 
 		function pick(e){
@@ -172,7 +170,7 @@ yangSelectInput.prototype = {
 			textInput.value = liTextContent;
 
 			optionUl.innerHTML = null;
-			stillIn = false;
+			that.stillIn = false;
 			option.style.border = '';
 		}
 	},
@@ -193,10 +191,28 @@ yangSelectInput.prototype = {
 		return this;
 	},
 
-	 /**
-	  * value 属性规定在表单被提交时被发送到服务器的值
-	  * textContent 属性用来显示
-	  */
+	/**
+	 * css setter getter
+	 */
+	set width(value){
+		this.self.style.width = value;
+	},
+	get width(){
+		return this.self.width;
+	},
+
+	set placeholder(text){
+		this.self.getElementsByClassName('yang-select-text')[0].placeholder = text;
+	},
+	get placeholder(){
+		return this.self.getElementsByClassName('yang-select-text')[0].placeholder;
+	},
+
+
+	/**
+	 * value 属性规定在表单被提交时被发送到服务器的值
+	 * textContent 属性用来显示
+	 */
 	setOption: function(options){
 		var select = this.self.getElementsByTagName('select')[0],
 			optionHTML = '';

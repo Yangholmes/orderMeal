@@ -8,7 +8,9 @@
 var options={	value:['1一','1二','1三', '1111', '11112', '11113'],
 				textContent:['1一','1二','1三', '1111', '1112', '11113']};
 var select = new yangSelectInput( 'mySelect', options );
-select.insert(document.getElementsByTagName('body')[0]);
+select.insert(document.getElementsByClassName('test')[0]);
+select.width = '16em';
+select.placeholder = '输入关键字查询';
 // document.getElementsByTagName('body')[0].appendChild(select.self);
 
 

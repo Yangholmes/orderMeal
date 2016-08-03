@@ -23,11 +23,24 @@ header{
 	border-bottom: solid 2px gray;
 	line-height: 150px;
 }
+header h1#order-title{
+	display: inline-block;
+}
+header div#funny-pic{
+	width: auto; height: auto;
+	display: inline-block;
+	float: right;
+	margin: 25px 25px 0 0;
+}
+header #funny-pic img{
+	height: 100px;
+}
 
 .district{
 	margin-top: 50px;
 }
-.district *{
+.district > *,
+#order-form > *{
     margin-bottom: 25px;
 }
 .ancher{
