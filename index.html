@@ -29,7 +29,7 @@
 			<div class="district" id="order">
 				<h2 class="ancher">点餐</h2>
 
-				<form id="order-form" action="orderMeal.php" method="post">
+				<form id="order-form" enctype="multipart/form-data">
 					<div id="selector">
 						<div id="name"></div>
 						<div id="meal"></div>
@@ -37,7 +37,7 @@
 					<div id="button">
 						<div class="yangButton">
 							<label for="order-meal">点餐</label>
-							 <button type="submit" id="order-meal" value=""></button>
+							<button type="submit" id="order-meal" value=""></button>
 						</div>
 						<div class="yangButton">
 							<label for="random-meal">随便点一个</label>
@@ -50,8 +50,7 @@
 
 			<div class="district" id="bulletin-board">
 				<h2 class="ancher">消息</h2>
-				<div id="board">今天的饭狗吃了</div>
-				<div id="broadcast"></div>
+				<div id="broadcast">今天A餐不供应</div>
 			</div>
 		</main>
 		<!-- mian end -->

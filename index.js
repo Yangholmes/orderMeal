@@ -2,6 +2,7 @@
 
 function init(){
 	generateYangCtrl();
+	loadEverything();
 	registEvents();
 }
 
@@ -14,7 +15,43 @@ function generateYangCtrl(){
 	var mealSelect = new yangSelectInput( 'meal', mealOptions );
 	mealSelect.width = '93%'; mealSelect.insert(document.getElementById('meal'));
 }
+function loadEverything(){
+	var checkQuery = new queryMsg(0, "init", 1),
+		submitOreder = document.getElementById('submit-order');
 
+	postData("init.php", checkQuery, function(request){
+		var response = JSON.parse(request.responseText),
+			remark = '', personnel = [];
+		console.log(response);
+		if( response.status == 0 ){
+			alert(response.content.orderEnable);
+			shake('name','',10,5000,10);
+			return false;
+		}
+		personnel = response.content.personnel;
+		remark = response.content.remark;
+
+		
+	});
+}
+function registEvents(){
+	var orderForm = document.getElementById('order-form'); //表单确认事件
+
+	orderForm.onsubmit = function(orderForm){return onSubmitOrder(orderForm)};
+}
+
+/**
+ * 
+ */
+function onSubmitOrder(orderForm){
+	postForm("orderMeal.php", orderForm, function(request){
+		var response = JSON.parse(request.responseText);
+		if(response.status == 1){
+
+		}
+	});
+	return false;
+}
 
 function eventRegister(){
 	//注册提交订单按键事件
@@ -117,6 +154,20 @@ function postJSON(url, data, callback){
 }
 
 /**
+ * 
+ */
+function postForm(url, form, callback){
+	var request = new XMLHttpRequest();
+	request.open("POST", url);
+	request.onreadystatechange = function(){
+		if (request.readyState === 4 && callback)	// When response is complete
+			callback(request);
+	};
+	// request.setRequestHeader("Content-Type", "multipart/form-data");
+	request.send(new FormData(form));
+}
+
+/**
  * Encode the properties of an object as if they were name/value pairs from
  * an HTML form, using application/x-www-form-urlencoded format
  * @param data: must be [Object]
@@ -145,7 +196,9 @@ function postData(url, data, callback) {
 	request.setRequestHeader("Content-Type",	// Set Content-Type
 							 "application/x-www-form-urlencoded");
 	request.send(encodeFormData(data));			// Send form-encoded data
+
 }
+
 
 /**
  * @param e: element object or id of the element

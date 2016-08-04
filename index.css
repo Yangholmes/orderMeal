@@ -110,7 +110,9 @@ label{
 }
 
 
-
+/**
+ * style for table
+ */
 table{
 	width: 90%;
 	border-collapse: collapse;
@@ -136,7 +138,25 @@ footer{
 	padding: 2em 0;
 }
 
-
+/**
+ * broadcast
+ */
+#bulletin-board h2{
+	display: none;
+}
+#broadcast{
+	width: 7em;
+	position: fixed;
+	left: 100%; top: 60%;
+	animation: broadcast linear 7s /*infinite*/3;
+	overflow-y: hidden;
+	font-size: 4em; font-weight: bold; 
+	color: red;
+}
+@keyframes broadcast{
+	0% {left: 100%;}
+	100% {left: -7em;}
+}
 
 /**
  * Styling Scrollbars
