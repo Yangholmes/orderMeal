@@ -90,13 +90,17 @@ switch($content){
 		break;
 	case 'mostused':
 		//查询未点餐成员
-		$query = "select personnel.name
+		/*$query = "select personnel.name
 				 from mostused, personnel 
 				 where mostused.personnelId not in (
 				 	select $table.personnelId 
 				 	from $table, mostused 
-				 	where $table.personnelId=mostused.personnelId )
-				 and personnel.personnelId = mostused.personnelId";
+				 	where $table.personnelId = mostused.personnelId )
+				 and personnel.personnelId = mostused.personnelId";*/
+		$query = "select personnel.name
+				 from personnel left join $table 
+				 on personnel.personnelId = $table.personnelId
+				 where $table.meal is NULL";		 
 		$mostused = $orderMeal->query($query);
 		
 		$count_mostused = $mostused->num_rows;

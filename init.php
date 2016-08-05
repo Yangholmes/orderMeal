@@ -1,6 +1,6 @@
 <?php
 
-/**
+	/**
 	 * 前端数据
 	 * 一个消息类
 	 */
@@ -103,8 +103,8 @@ if( !$result ){
 }
 
 //if $orderEnable!=0, enable to order
-// $orderEnable = $result->num_rows;'
-$orderEnable = 1;
+$orderEnable = $result->num_rows;
+// $orderEnable = 1;
 $response['status'] = ($orderEnable!=0?1:0);
 $response['content']['orderEnable'] = "菜单还没准备好，\n订餐请稍后！";
 

@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * 返回前端数据格式
+ * type: 关联数组
+ */
+$response = array(
+	'queryType'=>0, 
+	'content'=>'', 
+	'status'=>0
+);
+
+/**
  * form from front-end
  */
 $name = trim( $_POST['name'] );
@@ -58,6 +68,9 @@ $query = ($repeat != 0)?
 $result = $orderMeal->query($query);
 
 if( !$result ){
+	$response['status'] = 0;
+	$response['content']= array('error'=>$orderMeal->error);
+	echo json_encode($response);
 	exit($fail."原因是：<br/>".$orderMeal->error);
 }
 
@@ -79,13 +92,16 @@ if($result->num_rows === 1){ //常点餐名单中已经存在的人
 				where $table.personnelId = personnel.personnelId 
 				and personnel.name = '$name'";
 	$result = $orderMeal->query($query); //写入数据库
-	echo json_encode($result);
+	// echo json_encode($result);
 }
 else if($result->num_rows === 0){ //常点餐名单中还未有记录的人
 	$query =	"insert into $table(personnelId, frequency, $meal)
 				values ((select personnelId from personnel where personnel.name = '$name'), 1, 1)";
 	$result = $orderMeal->query($query);
-	echo json_encode($result);
+	// echo json_encode($result);
 }
 
-echo $success;
+$response['status'] = 1;
+$response['content'] = array('success'=>$success);
+echo json_encode($response);
+/*echo $success;*/

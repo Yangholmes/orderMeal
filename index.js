@@ -1,76 +1,94 @@
 ﻿window.onload = init();
 
 function init(){
-	generateYangCtrl();
+	// generateYangCtrl();
 	loadEverything();
 	registEvents();
 }
 
-function generateYangCtrl(){
-	var nameOptions = {value: ["0"], textContent: ["某某某"]},
-		mealOptions = {value: ['A', 'B', 'C', 'D'], textContent: ['A', 'B', 'C', 'D']};
-		
-	var nameSelect = new yangSelectInput( 'name', nameOptions );
-	nameSelect.width = '93%'; nameSelect.insert(document.getElementById('name'));
-	var mealSelect = new yangSelectInput( 'meal', mealOptions );
-	mealSelect.width = '93%'; mealSelect.insert(document.getElementById('meal'));
-}
 function loadEverything(){
 	var checkQuery = new queryMsg(0, "init", 1),
-		submitOreder = document.getElementById('submit-order');
+		submitOreder = document.getElementById('submit-order'),
+		nameOptions = {value: [], textContent: []};
 
 	postData("init.php", checkQuery, function(request){
 		var response = JSON.parse(request.responseText),
 			remark = '', personnel = [];
-		console.log(response);
-		if( response.status == 0 ){
-			alert(response.content.orderEnable);
-			shake('name','',10,5000,10);
-			return false;
-		}
-		personnel = response.content.personnel;
-		remark = response.content.remark;
+		if( response.status == 1 ){
+			personnel = response.content.personnel;
+			nameOptions.value = personnel; nameOptions.textContent = personnel;
+			generateYangCtrl(nameOptions);
 
-		
+			remark = response.content.remark;
+			generateBroadcast(remark);
+		}
+		else{
+			alert(response.content.orderEnable);
+			// shake('name','',10,5000,10);
+			return false;
+		}	
 	});
 }
-function registEvents(){
-	var orderForm = document.getElementById('order-form'); //表单确认事件
+function generateYangCtrl(nameOptions){
+	var mealOptions = {value: ['A', 'B', 'C', 'D'], textContent: ['A', 'B', 'C', 'D']};
+		
+	var nameSelect = new yangSelectInput( 'name', nameOptions );
+	nameSelect.width = '93%'; nameSelect.insert(document.getElementById('name'));
+	// 加载 缓存
+	if(localStorage.nameSelectedIndex != null) nameSelect.setSelectedIndex(localStorage.nameSelectedIndex);
+	else nameSelect.setSelectedIndex(0);
 
-	orderForm.onsubmit = function(orderForm){return onSubmitOrder(orderForm)};
+	var mealSelect = new yangSelectInput( 'meal', mealOptions );
+	mealSelect.width = '93%'; mealSelect.insert(document.getElementById('meal'));
+	mealSelect.setSelectedIndex(0);
+}
+function generateBroadcast(remark){
+	var broadcast = document.getElementById('broadcast'),
+		width = remark.length + 'em';
+
+	var style = document.createElement('style');
+	style.innerHTML = '@-webkit-keyframes broadcast{' +
+						'0% {left: 100%;}' +
+						'100% {left: -' + width + ';}' +
+					'}' + 
+					'@keyframes broadcast{' +
+						'0% {left: 100%;}' +
+						'100% {left: -' + width + ';}' +
+					'}';
+	document.getElementsByTagName('head')[0].appendChild(style);
+
+	broadcast.style.width = width;
+
+	broadcast.innerHTML = remark;
+}
+function registEvents(){
+	var orderForm = document.getElementById('order-form'), //表单确认事件
+		randomMealBtn = document.getElementById('random-meal'); //随机点餐
+
+	orderForm.onsubmit = function(){return onSubmitOrder(orderForm)};
+	randomMealBtn.onclick = onRandomClick;
 }
 
-/**
- * 
- */
 function onSubmitOrder(orderForm){
+	localStorage.nameSelectedIndex = orderForm.name.selectedIndex; // 缓存
 	postForm("orderMeal.php", orderForm, function(request){
 		var response = JSON.parse(request.responseText);
-		if(response.status == 1){
-
-		}
+		if(response.status == 1)
+			alert('成功点餐！中午12点开饭！');
+		else
+			alert('遗憾，点餐失败了！');
 	});
 	return false;
 }
 
-function eventRegister(){
-	//注册提交订单按键事件
-	var orderForm = document.getElementById('order-form');
-	orderForm.onsubmit = function(){return onSubmit(orderForm)};
-	//注册随机点餐链接事件
-	var aRandomMeal = document.getElementById('random-meal');
-	aRandomMeal.onclick = function(){onRandomClick(aRandomMeal)};
-}
-function onSubmit(handle){
-	localStorage.nameSelectedIndex = handle.name.selectedIndex;
-	//return false;
-}
 function onRandomClick(handle){
-	var randomSelection = Math.round( Math.random()*3 );
-	var mealSelector = handle.previousElementSibling;//获取上一个兄节点。
-	//随机跳动动画
-	var i=0;
-	var randomAnimation = setInterval( function(){
+	alert('抱歉啊~故障了~暂停使用~');
+/*	var randomSelection = Math.round( Math.random()*3 ),
+		mealSelector = document.getElementById('meal').getElementsByTagName('select')[0],
+		
+		//随机跳动动画
+		i=0,
+		randomAnimation = setInterval( function(){
 			mealSelector.selectedIndex = Math.round( Math.random()*3 );
 			i++;
 			if(i==50){
@@ -79,43 +97,7 @@ function onRandomClick(handle){
 					mealSelector.options[mealSelector.selectedIndex].value + 
 					"?");
 			}
-		},10);
-	// mealSelector.selectedIndex = randomSelection;
-}
-function loadMenu(remark){
-	var remarkCtrl = document.getElementById('remarks');
-	remarkCtrl.innerHTML = remark;
-}
-function checkOrder(){
-	var checkQuery = new queryMsg(0, "init", 1);
-	var submitOreder = document.getElementById('submit-order');
-	postData("init.php", checkQuery, function(request){
-		var response = JSON.parse(request.responseText);
-		if( response.status == 0 ){
-			alert(response.content.orderEnable);
-			shake('name','',10,5000,10);
-			submitOreder.disabled = true; submitOreder.style.backgroundColor = 'black';
-			return false;
-		}
-		loadName(response.content.personnel);
-		loadMenu(response.content.remark);
-	});
-}
-function loadName(personnel){
-	var nameSelect = document.getElementById('name');
-	var optionsHTML = "";
-	for(var i=0;i<personnel.length;i++){
-		optionsHTML = optionsHTML + 
-			"<option value=\""+personnel[i]+"\">"+personnel[i]+"</option>";
-	}
-	nameSelect.innerHTML = optionsHTML;
-	
-	loadLocalStorage(nameSelect);
-}
-function loadLocalStorage(handle){
-	if( localStorage.nameSelectedIndex == null )
-		return false;
-	handle.selectedIndex = localStorage.nameSelectedIndex;
+		},10);*/
 }
 
 /////////////////////////////////////////////////////////////////////////////////////

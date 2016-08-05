@@ -44,7 +44,7 @@ yangSelectInput.prototype = {
 								'yang-select-button input[type="button"]': 'visibility: hidden; font-family: "Microsoft YaHei"',
 								'yang-select-button label': 'cursor: pointer; display: inline-block; width: 1.5em; height: 1.5em; line-height: 1.5em;',
 								'yang-select-button label:hover': 'background-color: gray;',
-						'yang-select-option': 'width: 100%; height: auto; max-height: 10em; position: relative; background-color: white; overflow-y: auto',
+						'yang-select-option': 'width: 100%; height: auto; max-height: 9.5em; position: relative; background-color: white; overflow-y: auto',
 							'yang-select-option ul': 'list-style: none; padding: 0; margin: 0;',
 							'yang-select-option li:hover': 'width: 100%; background-color: gray; cursor: pointer;',
 						'yang-select-select': 'visibility: hidden; margin: 0; position: absolute;',
@@ -219,7 +219,7 @@ yangSelectInput.prototype = {
 		this.value = options.value;
 		this.textContent = options.textContent;
 
-		for(var  i=0;i<this.textContent.length;i++){
+		for(var i=0;i<this.textContent.length;i++){
 			optionHTML += '<option value="' + this.value[i] + '">' +
 							this.textContent[i] + '</option>';
 		}

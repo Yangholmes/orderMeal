@@ -148,15 +148,16 @@ footer{
 	width: 7em;
 	position: fixed;
 	left: 100%; top: 60%;
-	animation: broadcast linear 7s /*infinite*/3;
 	overflow-y: hidden;
 	font-size: 4em; font-weight: bold; 
 	color: red;
+	-webkit-animation: broadcast linear 8s 3;
+	animation: broadcast linear 8s 3;
 }
-@keyframes broadcast{
+/*@keyframes broadcast{
 	0% {left: 100%;}
-	100% {left: -7em;}
-}
+	100% {left: -12em;}
+}*/
 
 /**
  * Styling Scrollbars
