@@ -119,7 +119,7 @@ yangSelectInput.prototype = {
 			// optionLi = this.self.getElementsByTagName('li'),
 			select = this.self.getElementsByTagName('select')[0];
 
-		textInput.addEventListener('focus', search, false); //focuns on the control
+		textInput.addEventListener('focus', search, false); textInput.addEventListener('touchstart', search, false); //focuns on the control or touch the control
 		textInput.addEventListener('blur', leave, false); //blur
 		textInput.addEventListener('keyup', search, false);
 
@@ -141,25 +141,29 @@ yangSelectInput.prototype = {
 
 			optionUl.innerHTML = liHTML;
 			option.style.border = 'solid 1px gray';
+
 			for(var i=0;i<optionLi.length;i++){
-				optionLi[i].addEventListener('click', pick, false);
-				optionLi[i].addEventListener('mouseenter', keep, false);
+				optionLi[i].addEventListener('click', pick, false); 
+				optionLi[i].addEventListener('mouseenter', keep, false); optionLi[i].addEventListener('touchstart', keep, false); //cellphone ontouchstart event
 				optionLi[i].addEventListener('mouseout', release, false);
+
 			}
 		}
 
 		function leave(e){
-			if(!that.stillIn){
+			console.log(that._stillIn);
+			if(!that._stillIn){
 				optionUl.innerHTML = null;	
 				option.style.border = '';
 			}
+
 		}
 
 		function keep(e){
-			that.stillIn = true;
+			that._stillIn = true;
 		}
 		function release(e){
-			that.stillIn = false;
+			that._stillIn = false;
 		}
 
 		function pick(e){
@@ -170,7 +174,7 @@ yangSelectInput.prototype = {
 			textInput.value = liTextContent;
 
 			optionUl.innerHTML = null;
-			that.stillIn = false;
+			that._stillIn = false;
 			option.style.border = '';
 		}
 	},
