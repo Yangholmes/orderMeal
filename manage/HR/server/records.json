@@ -1,0 +1,11 @@
+{
+    "status"  : "success",
+    "total"   : 5,
+    "records" : [
+        { recid: 1, name: '李大嘴', engName: 'Dazui', sex: '1', age: '25', department: '1' },
+        { recid: 2, name: '李二嘴', engName: 'Dazui', sex: '1', age: '25', department: '1' },
+        { recid: 3, name: '李三嘴', engName: 'Dazui', sex: '1', age: '25', department: '1' },
+        { recid: 4, name: '李四嘴', engName: 'Dazui', sex: '1', age: '25', department: '1' },
+        { recid: 5, name: '李五嘴', engName: 'Dazui', sex: '1', age: '25', department: '1' },
+    ]
+}

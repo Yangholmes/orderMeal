@@ -1,0 +1,11 @@
+@CHARSET "UTF-8"
+
+html,
+body{
+	height: 100%; width: 100%;
+}
+
+.w2ui-grid{
+	width: 60%;
+	height: 20em;
+}
