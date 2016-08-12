@@ -9,3 +9,6 @@ body{
 	width: 60%;
 	height: 20em;
 }
+.w2ui-grid #grid_personnelGrid_rec_bottom{
+	display: none;
+}

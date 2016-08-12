@@ -69,8 +69,8 @@
 }
 .w2ui-reset table {
   font-family: Verdana, Arial, sans-serif;
-  /*font-size: 11px;*/
-  font-size: 1em;
+  font-size: 11px;
+  /*font-size: 1em;*/
   max-width: none;
   background-color: transparent;
   border-collapse: separate;

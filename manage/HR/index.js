@@ -4,11 +4,11 @@ $('#personnel').w2grid({
     url  : {
         // get    : '../HR/server/records.json',
         get:  '../HR/server/records.php',
-        remove : '../HR/server/test.php',
-        save   : ''
+        remove : '../HR/server/remove.php',
+        save   : '',
     },
     show : {
-        toolbar : true
+        toolbar : true, toolbarAdd: true, toolbarDelete: true, toolbarSave: true,
     },
     toolbar: {
         items: [
@@ -28,11 +28,16 @@ $('#personnel').w2grid({
         { field: 'department', caption: '部门', size: '20%', editable: {type: 'combo', items: ['1', '2', '3'], openOnFocus: true} },
     ],
     onChange: function(target, e) {
-        console.log(e);
-        console.log(target);
         e.onComplete = function () {
             w2ui[target].save();    
         }
+    },
+    onAdd: function(target, e) {
+        this.add({recid: this.records.length+1});
+        // $('#grid_' + target +  '_edit_'+ (this.records.length) + '_1').focus();
+        var td = $('#grid_' + target +  '_rec_'+ (this.records.length) + '> td:eq(0)');
+        console.log(td);
+        td.trigger('click');
     },
     // records: [
     //     { recid: 1, name: '李大嘴', engName: 'Dazui', sex: '1', age: '25', department: '1' },
