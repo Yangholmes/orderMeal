@@ -4,9 +4,11 @@
 <mysqlConfig>
 	<devhost>localhost</devhost>
 	<host>localhost</host>
-	<usrname>root</usrname>
+	<usr>root</usr>
 	<password>1001</password>
 	<charset>utf-8</charset>
 </mysqlConfig>
-<mysqlInfo></mysqlInfo>
+<mysqlInfo>
+	<version></version>
+</mysqlInfo>
 </mysql>
