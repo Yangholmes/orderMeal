@@ -2,6 +2,7 @@
 
 /**
  * 从xml文件中读取xml数据
+ * example: $host = (string)xmlFileRead($url)->usrConfig->host; //"localhost"
  */
 function xmlFileRead($url = "config.xml"){
 	if( !file_exists($url) ){

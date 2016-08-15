@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mysql>
+<author page="http://www.yangholmes.github.io">yangholmes</author>
+<mysqlConfig>
+	<devhost>localhost</devhost>
+	<host>localhost</host>
+	<usrname>root</usrname>
+	<password>1001</password>
+	<charset>utf-8</charset>
+</mysqlConfig>
+<mysqlInfo></mysqlInfo>
+</mysql>
