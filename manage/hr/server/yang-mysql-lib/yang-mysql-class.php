@@ -57,7 +57,7 @@ class yangMysql{
 	 */
 	public function query($query){
 		$this->query = $query;
-		echo "query is ## "; echo json_encode($this->query); echo "\n";
+		echo "@@ query is "; echo json_encode($this->query); echo "\n";
 		$result = $this->connection->query($this->query);
 		if(!$result){ //Returns FALSE on failure.
 			$this->errorHandle();
@@ -66,7 +66,7 @@ class yangMysql{
 		if(!is_bool($result)){ //For successful SELECT, SHOW, DESCRIBE or EXPLAIN queries mysqli_query() will return a mysqli_result object.
 			$this->row = $result->num_rows;
 			$this->result = $result->fetch_all(MYSQLI_ASSOC); //PHP 5 >= 5.3.0, PHP 7, MYSQL_ASSOC means return an association array
-			echo "result is ## "; echo json_encode($this->result); echo "\n";
+			echo "## affect $this->row rows \n$$ result is "; echo json_encode($this->result); echo "\n";
 			return $this->result;
 		}
 		else //For other successful queries mysqli_query() will return TRUE.
@@ -227,6 +227,7 @@ class yangMysql{
  * test
  */
 $yangsql = new yangMysql(); //instantiation
+
 $yangsql->getCharset(); //test queryCharset()
 $yangsql->selectDb("ordermeal"); //
 $yangsql->showTables(); //
