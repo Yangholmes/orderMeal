@@ -15,8 +15,10 @@ class yangMysql{
 	private $connection; //mySQL connection
 	private $query; //mySQL query
 
-	private $row;
-	private $result = array();
+	// private $row;
+	// private $result = array();
+	public $row;
+	public $result = array();
 
 	private $logEnable = true;
 
