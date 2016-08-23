@@ -8,6 +8,10 @@
 	<password>1001</password>
 	<charset>utf-8</charset>
 </mysqlConfig>
+<userConfig>
+	<database>yang-test</database>
+	<table>test_user</table>
+</userConfig>
 <mysqlInfo>
 	<version></version>
 </mysqlInfo>

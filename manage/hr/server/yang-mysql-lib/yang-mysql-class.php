@@ -1,8 +1,8 @@
 <?php
 
 class yangMysql{
-	private $configUrl = "configuration/";
-	private $logUrl = "log/";
+	private $configUrl = __DIR__."/configuration/";
+	private $logUrl = __DIR__."/log/";
 
 	private $db_host;
 	private $db_usr;
@@ -34,6 +34,8 @@ class yangMysql{
 		// $this->db_host = (string)xmlFileRead($url)->mysqlConfig->host;
 		$this->db_usr = (string)xmlFileRead($configXmlUrl)->mysqlConfig->usr;
 		$this->db_password = (string)xmlFileRead($configXmlUrl)->mysqlConfig->password;
+		$this->db_database = (string)xmlFileRead($configXmlUrl)->userConfig->database; //default database
+		$this->db_table = (string)xmlFileRead($configXmlUrl)->userConfig->table; //default table
 		$this->connect(); //connect to mysql
 	}
 	/**
@@ -47,11 +49,14 @@ class yangMysql{
 	 * connect to MySQL
 	 */
 	public function connect(){
-		$this->connection = new mysqli($this->db_host, $this->db_usr, $this->db_password);
+		@ $this->connection = new mysqli($this->db_host, $this->db_usr, $this->db_password,$this->db_database);
 		if($this->connection->connect_error){
 			$this->errorHandle();
 			$this->connection = null; //if error occur, set connection null
+			return false;
 		}
+		if($this->db_table)
+			$this->selectTable($this->db_table);
 	}
 
 	/**
@@ -110,7 +115,7 @@ class yangMysql{
 			return flase;
 		}
 		$this->db_database = $database;
-		echo json_encode($this->db_database);
+		// echo json_encode($this->db_database);
 		return $this->db_database;
 	}
 
@@ -119,12 +124,7 @@ class yangMysql{
 	 */
 	public function showTables(){
 		$query = "show tables";
-		$tables = $this->query($query);
-		if($this->connection->connect_error){
-			$this->errorHandle();
-			return flase;
-		}
-		return $tables; //[{}]
+		return $this->query($query); //[{}]
 	}
 	/**
 	 * select a table
@@ -140,7 +140,7 @@ class yangMysql{
 	public function truncateTable($table){
 		//remind: here must have some methods to check the table
 		$query = "TRUNCATE $table";
-		$this->query($query);
+		return $this->query($query);
 	}
 
 	/**
@@ -175,7 +175,7 @@ class yangMysql{
 		$orderby = $order ? "ORDER BY $order[0] $order[1]" : "";
 		$limitby = $limit ? "LIMIT $limit[0] $limit[1]" : "";
 		$query = "SELECT $select_expr FROM $this->db_table $where_condition $orderby $limitby";
-		$this->query($query);
+		return $this->query($query);
 	}
 
 	/**
@@ -189,7 +189,7 @@ class yangMysql{
 		$name = implode(",", array_keys($record)); //implode() join()  Join array elements with a string
 		$value = implode(",", $record); //
 		$query = "INSERT INTO $this->db_table($name) VALUES($value)";
-		$this->query($query);
+		return $this->query($query);
 	}
 
 	/**
@@ -211,7 +211,7 @@ class yangMysql{
 		$orderby = $order ? "ORDER BY $order[0] $order[1]" : "";
 		$limit = $rowcount ? "LIMIT $rowcount" : "";
 		$query = "UPDATE $this->db_table SET $updateExp $where_condition $orderby $limit";
-		$this->query($query);
+		return $this->query($query);
 	}
 
 	/**
@@ -220,7 +220,7 @@ class yangMysql{
 	public function delete($condition){
 		$where_condition = $condition ? "WHERE $condition" : "";
 		$query = "DELETE FROM $this->db_table $where_condition";
-		$this->query($query);
+		return $this->query($query);
 	}
 }
 
@@ -228,7 +228,7 @@ class yangMysql{
 /**
  * test
  */
-$yangsql = new yangMysql(); //instantiation
+/*$yangsql = new yangMysql(); //instantiation
 
 $yangsql->getCharset(); //test queryCharset()
 $yangsql->selectDb("ordermeal"); //
@@ -239,4 +239,4 @@ $yangsql->simpleSelect(null,"personnelId=1",null,null);
 $yangsql->update(["name"=>"999", "engName"=>"nineninenine", "age"=>null, "department"=>null], "personnelId=1", null, null);
 $yangsql->simpleSelect(null,"personnelId=1",null,null);
 $yangsql->delete("personnelId=1");
-$yangsql->truncateTable("order160808"); //
+$yangsql->truncateTable("order160808"); //*/
