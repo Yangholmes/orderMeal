@@ -20,4 +20,4 @@ function register($username, $password, $email, $protection=null){
 /**
  * for example
  */
-register("yangholmes", "1001", "yangholmes@126.com", null);
+// register("yangholmes", "1001", "yangholmes@126.com", null);
